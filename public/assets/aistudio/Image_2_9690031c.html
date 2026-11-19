@@ -1,0 +1,1601 @@
+<!DOCTYPE html><html lang="en" style=""><head></head><body class="bg-surface text-primary flex flex-col min-h-screen relative overflow-x-hidden selection:bg-black selection:text-white"><svg aria-hidden="true" class="inline-defs-container" style="position:absolute;width:0;height:0;overflow:hidden"></svg>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport">
+<title>Change - Mindful Micro Finance</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;family=Space+Grotesk:wght@400;500;600;700&amp;family=Montez&amp;display=swap" rel="stylesheet"><style id="montez-universal-typography">
+  *, body, button, input, select, textarea {
+    font-family: 'Montez', cursive !important;
+  }
+  .material-symbols-outlined {
+    font-family: 'Material Symbols Outlined' !important;
+  }
+</style>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface": "#f9f9f9",
+            "primary": "#000000",
+            "secondary": "#5e5e5e",
+            "surface-container-low": "#f3f3f4",
+            "surface-container": "#eeeeee",
+            "surface-container-high": "#e8e8e8",
+            "surface-container-highest": "#e2e2e2",
+            "surface-container-lowest": "#ffffff"
+          },
+          fontFamily: {
+            "cursive-montez": ["Montez", "cursive"],
+            "space": ["Space Grotesk", "sans-serif"],
+            "mono": ["JetBrains Mono", "monospace"],
+            "bricolage": ["Bricolage Grotesque", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+<style>
+    @layer base {
+      html, body {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        background-color: #f9f9f9;
+        font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+        overscroll-behavior-y: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+    }
+    ::-webkit-scrollbar { display: none; }
+
+    /* Elegant Font Class for Display & Stats */
+    .font-montez {
+      font-family: 'Montez', cursive !important;
+    }
+
+    /* STEP 1: Logo Zoom Out Keyframe */
+    @keyframes logoZoomOutIntro {
+      0% { transform: scale(1.4); opacity: 0; }
+      15% { opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .intro-logo-anim {
+      animation: logoZoomOutIntro 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* Rings pulsing cleanly around center logo (Step 2: Starts with delay) */
+    @keyframes pulseRing1 {
+      0% { transform: scale(0.75); opacity: 0.8; }
+      50% { opacity: 0.4; }
+      100% { transform: scale(1.5); opacity: 0; }
+    }
+    @keyframes pulseRing2 {
+      0% { transform: scale(0.75); opacity: 0.65; }
+      50% { opacity: 0.3; }
+      100% { transform: scale(1.9); opacity: 0; }
+    }
+    @keyframes pulseRing3 {
+      0% { transform: scale(0.75); opacity: 0.5; }
+      50% { opacity: 0.2; }
+      100% { transform: scale(2.3); opacity: 0; }
+    }
+
+    .ring-pulse-1 {
+      animation: pulseRing1 2.8s cubic-bezier(0.2, 0.6, 0.35, 1) infinite;
+    }
+    .ring-pulse-2 {
+      animation: pulseRing2 2.8s cubic-bezier(0.2, 0.6, 0.35, 1) 0.7s infinite;
+    }
+    .ring-pulse-3 {
+      animation: pulseRing3 2.8s cubic-bezier(0.2, 0.6, 0.35, 1) 1.4s infinite;
+    }
+
+    /* Orbiting & Bobbing */
+    @keyframes floatOrbitTrack {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @keyframes counterOrbitTrack {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(-360deg); }
+    }
+    @keyframes doodleBob {
+      0%, 100% { transform: translateY(0px) scale(1); }
+      50% { transform: translateY(-5px) scale(1.06); }
+    }
+
+    .orbit-track {
+      animation: floatOrbitTrack 24s linear infinite;
+    }
+    .counter-orbit {
+      animation: counterOrbitTrack 24s linear infinite;
+    }
+    .bobbing {
+      animation: doodleBob 3.5s ease-in-out infinite;
+    }
+
+    /* Rotation state control for donut */
+    .pie-rotating {
+      animation: floatOrbitTrack 30s linear infinite;
+      transform-origin: center center;
+    }
+    .pie-paused {
+      animation-play-state: paused !important;
+    }
+
+    /* Interactive slice pop-out transforms */
+    .slice-interactive {
+      cursor: pointer;
+      pointer-events: auto;
+      transform-origin: 100px 100px;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.25s ease;
+    }
+    .slice-interactive:hover {
+      filter: drop-shadow(0px 3px 6px rgba(0,0,0,0.22));
+    }
+    .slice-selected-essentials {
+      transform: translate(6px, -5px) scale(1.06);
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+    }
+    .slice-selected-fun {
+      transform: translate(0px, 7px) scale(1.06);
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+    }
+    .slice-selected-savings {
+      transform: translate(-6px, -5px) scale(1.06);
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+    }
+
+    /* Step 2 & 3 Cascade Classes */
+    .fade-in-delayed-rings {
+      opacity: 0;
+      animation: fadeInSeq 0.6s ease-out 0.85s forwards;
+    }
+    .fade-in-delayed-icons {
+      opacity: 0;
+      animation: fadeInSeq 0.7s ease-out 1.35s forwards;
+    }
+    @keyframes fadeInSeq {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Gemini voice trigger aura glow */
+    @keyframes geminiRainbowPulse {
+      0%, 100% { transform: scale(1); opacity: 0.85; filter: blur(14px); }
+      50% { transform: scale(1.18); opacity: 1; filter: blur(18px); }
+    }
+    .gemini-aura-active {
+      animation: geminiRainbowPulse 2.2s ease-in-out infinite;
+    }
+
+    /* Hand-drawn sketchy border simulation */
+    .sketch-border {
+      border: 2px solid #1a1a1a;
+      border-radius: 9999px;
+      box-shadow: 1px 2px 0px 0px rgba(0,0,0,0.8), -0.5px -0.5px 0px 1px rgba(0,0,0,0.15);
+    }
+    .sketch-card {
+      border: 1.5px solid #1a1a1a;
+      box-shadow: 2px 3px 0px 0px rgba(0,0,0,0.85);
+    }
+
+    /* Doodle menu dropdown card */
+    .sketch-dropdown {
+      border: 1.8px solid #18181b;
+      border-radius: 1rem;
+      box-shadow: 3px 4px 0px 0px rgba(0,0,0,0.9), 0 8px 20px rgba(0,0,0,0.06);
+    }
+  </style>
+<!-- SVG Pattern Defs for Hand-drawn Pie Slices -->
+<svg aria-hidden="true" class="absolute w-0 h-0 pointer-events-none" style="position: absolute; width: 0; height: 0; overflow: hidden;">
+<defs>
+<!-- Pattern 1: Diagonal Hatch / Striped (Essentials 48%) -->
+<pattern height="8" id="doodleHatch" patternTransform="rotate(45)" patternUnits="userSpaceOnUse" width="8">
+<line stroke="#1c1917" stroke-linecap="round" stroke-width="2.4" x1="0" x2="0" y1="0" y2="8"></line>
+</pattern>
+<!-- Pattern 2: Dotted / Polka-dot (Fun & Life 32%) -->
+<pattern height="8" id="doodleDots" patternUnits="userSpaceOnUse" width="8">
+<circle cx="4" cy="4" fill="#52525b" r="1.8"></circle>
+</pattern>
+<!-- Pattern 3: Currency / Speckle Doodle Pattern (Savings 20%) -->
+<pattern height="14" id="doodleRupee" patternUnits="userSpaceOnUse" width="14">
+<text fill="#71717a" font-family="'Space Grotesk', sans-serif" font-size="10" font-weight="700" text-anchor="middle" x="7" y="11">₹</text>
+</pattern>
+</defs>
+</svg>
+<!-- ==============================================
+       1. INTRO ANIMATION (FULL SCREEN OVERLAY)
+       ============================================== -->
+<div class="fixed inset-0 z-50 bg-[#ffffff] flex flex-col items-center justify-center transition-opacity duration-700 ease-out select-none overflow-hidden" id="intro-overlay" style="display: none; pointer-events: none; opacity: 0;">
+<!-- Skip Intro Pill Button at Top Right -->
+<div class="absolute top-12 right-6 z-30">
+<button class="px-4 py-1.5 rounded-full bg-surface-container-low text-primary text-xs font-semibold tracking-wide border border-black/10 hover:bg-surface-container active:scale-95 transition-all shadow-sm flex items-center gap-1 cursor-pointer" onclick="skipIntro()">
+<span class="font-montez text-sm">Skip Intro</span>
+<span class="text-[13px] leading-none">✕</span>
+</button>
+</div>
+<!-- Center Stage Container -->
+<div class="relative w-80 h-80 flex items-center justify-center">
+<!-- STEP 2: 3 Smooth Concentric Circles (organic ripples, delayed start) -->
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none fade-in-delayed-rings" id="intro-rings">
+<div class="absolute w-44 h-44 rounded-full border border-black/35 ring-pulse-1"></div>
+<div class="absolute w-44 h-44 rounded-full border border-black/25 ring-pulse-2"></div>
+<div class="absolute w-44 h-44 rounded-full border border-black/15 ring-pulse-3"></div>
+</div>
+<!-- STEP 3: Small Doodle Finance Icons Floating in Orbit (delayed fade-in) -->
+<div class="absolute w-64 h-64 pointer-events-none flex items-center justify-center fade-in-delayed-icons" id="intro-orbit">
+<div class="relative w-full h-full orbit-track">
+<!-- 1. Hand-Drawn Doodle Rupee Coin (Top) -->
+<div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2">
+<div class="counter-orbit bobbing">
+<svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+<!-- Outer sketchy coin circle -->
+<circle cx="12" cy="12" r="9.2"></circle>
+<!-- Inner rim circle -->
+<circle cx="12" cy="12" opacity="0.4" r="7.2" stroke-dasharray="2.5 2" stroke-width="1.2"></circle>
+<!-- Rupee symbol doodle -->
+<path d="M9.5 7.5h5" stroke-width="1.8"></path>
+<path d="M9.5 9.8h4.2" stroke-width="1.8"></path>
+<path d="M11.2 7.5v4.5c1.4 0 2.6.4 2.6 1.8 0 1.2-1 1.7-2.3 1.7" stroke-width="1.8"></path>
+<path d="M11.5 15.2l3 3.3" stroke-width="1.8"></path>
+</svg>
+</div>
+</div>
+<!-- 2. Bar Chart (Top-Right) -->
+<div class="absolute top-[18%] right-[8%] translate-x-1/2 -translate-y-1/2">
+<div class="counter-orbit bobbing" style="animation-delay: 0.5s;">
+<svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+<line x1="18" x2="18" y1="20" y2="10"></line>
+<line x1="12" x2="12" y1="20" y2="4"></line>
+<line x1="6" x2="6" y1="20" y2="14"></line>
+<line x1="3" x2="21" y1="20" y2="20"></line>
+</svg>
+</div>
+</div>
+<!-- 3. Calculator (Bottom-Right) -->
+<div class="absolute bottom-[18%] right-[8%] translate-x-1/2 translate-y-1/2">
+<div class="counter-orbit bobbing" style="animation-delay: 1s;">
+<svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+<rect height="18" rx="2" width="14" x="5" y="3"></rect>
+<line x1="8" x2="16" y1="7" y2="7"></line>
+<circle cx="9" cy="12" fill="currentColor" r="1"></circle>
+<circle cx="12" cy="12" fill="currentColor" r="1"></circle>
+<circle cx="15" cy="12" fill="currentColor" r="1"></circle>
+<circle cx="9" cy="16" fill="currentColor" r="1"></circle>
+<circle cx="12" cy="16" fill="currentColor" r="1"></circle>
+<circle cx="15" cy="16" fill="currentColor" r="1"></circle>
+</svg>
+</div>
+</div>
+<!-- 4. Pie Chart (Bottom) -->
+<div class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2">
+<div class="counter-orbit bobbing" style="animation-delay: 1.5s;">
+<svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+<path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
+<path d="M22 12A10 10 0 0 0 12 2v10z"></path>
+</svg>
+</div>
+</div>
+<!-- 5. Receipt (Bottom-Left) -->
+<div class="absolute bottom-[18%] left-[8%] -translate-x-1/2 translate-y-1/2">
+<div class="counter-orbit bobbing" style="animation-delay: 2s;">
+<svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+<path d="M4 2v20l3-2 3 2 3-2 3 2 4-2V2l-4 2-3-2-3 2-3-2-3 2z"></path>
+<line x1="8" x2="16" y1="8" y2="8"></line>
+<line x1="8" x2="16" y1="12" y2="12"></line>
+<line x1="8" x2="12" y1="16" y2="16"></line>
+</svg>
+</div>
+</div>
+<!-- 6. Hand-Drawn Doodle Rupee Banknote (Top-Left) -->
+<div class="absolute top-[18%] left-[8%] -translate-x-1/2 -translate-y-1/2">
+<div class="counter-orbit bobbing" style="animation-delay: 2.5s;">
+<svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
+<!-- Rectangular banknote outline with rounded corners -->
+<rect height="13" rx="2" width="20" x="2" y="5.5"></rect>
+<!-- Center banknote circle -->
+<circle cx="12" cy="12" r="3.2" stroke-width="1.3"></circle>
+<!-- Rupee symbol inside note -->
+<path d="M11 10.3h2m-2 1.3h1.7m-.9-1.3v2c.5 0 .9.2.9.7 0 .5-.4.7-.9.7m0 0l1.1 1.2" stroke-width="1.3"></path>
+<!-- Side banknote decorative security lines -->
+<path d="M5 8.5v7m14-7v7" stroke-dasharray="1.5 1.5" stroke-width="1.2"></path>
+</svg>
+</div>
+</div>
+</div>
+</div>
+<!-- STEP 1: Centered Change Logo (Starts scaled up, smoothly zooms out to central rest) -->
+<div class="relative z-20 flex items-center justify-center p-2" id="intro-logo-box">
+<img alt="Change Logo" class="w-56 max-w-[260px] h-auto object-contain select-none intro-logo-anim" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2MB0ly1cOQqqujsHnO4sC536PlARRpav--zW4PiK9lPSrLjpsgsAvMOwv6r2ee16m-DzQebaaZ1KxGWkb0zxidLaQ36pFrrjXcVi7Yc7Ry9kbQwK4DmT3EPDCNNhlXwXmIF8krf0qA824L1Ulj1nibxc22slT8QlGHqww883o3UnBob-5OXNNm-w6Gr5mySA_6nEwQWuM2dsWpd3PSQUjRRTXpza6XyGFIS5tD1L5FEK6s0XdTFggWXblkLIUXrzhAA">
+</div>
+</div>
+<!-- Intro Bottom Caption -->
+<div class="absolute bottom-12 flex flex-col items-center text-center">
+<span class="font-montez text-primary text-3xl font-normal leading-tight">Change</span>
+<span class="font-mono text-[11px] text-secondary tracking-widest uppercase mt-0.5">Mindful Micro Finance</span>
+</div>
+</div>
+<!-- ==============================================
+       2. STATUS BAR (SYSTEM SANS-SERIF)
+       ============================================== -->
+<header class="fixed top-0 left-0 right-0 z-40 bg-surface/90 backdrop-blur-md">
+<div class="max-w-md mx-auto flex items-center justify-between px-6 pt-3 pb-1 text-primary text-xs font-semibold select-none">
+<span class="text-[14px] font-bold tracking-tight" style="font-family: -apple-system, BlinkMacSystemFont, &quot;SF Pro Text&quot;, sans-serif;">9:41</span>
+<div class="flex items-center gap-1.5" style="font-family: -apple-system, BlinkMacSystemFont, sans-serif;">
+<span class="material-symbols-outlined text-[16px]">signal_cellular_4_bar</span>
+<span class="material-symbols-outlined text-[16px]">wifi</span>
+<div class="flex items-center gap-0.5 ml-0.5">
+<div class="w-5 h-2.5 border border-primary rounded-sm p-0.5 flex items-center">
+<div class="w-full h-full bg-primary rounded-[1px]"></div>
+</div>
+<div class="w-0.5 h-1 bg-primary rounded-r-xs"></div>
+</div>
+</div>
+</div>
+</header>
+<!-- ==============================================
+       3. DASHBOARD MAIN CONTENT (SMOOTH SCROLL CONTAINER)
+       ============================================== -->
+<main class="flex-1 flex flex-col w-full max-w-md mx-auto pt-9 pb-16 px-4 bg-surface z-10 overflow-y-auto relative">
+<!-- Ambient Sketch Paper Texture Background Layer -->
+<div aria-hidden="true" class="fixed inset-0 pointer-events-none opacity-[0.12] z-0 overflow-hidden">
+<svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<pattern height="48" id="grid-doodle" patternUnits="userSpaceOnUse" width="48">
+<circle cx="12" cy="12" fill="#000000" r="1.2"></circle>
+<circle cx="36" cy="36" fill="#000000" r="0.9"></circle>
+<path d="M4 42 Q 14 46, 24 42" fill="none" stroke="#000000" stroke-linecap="round" stroke-width="0.8"></path>
+<path d="M38 8 Q 44 4, 46 12" fill="none" stroke="#000000" stroke-width="0.6"></path>
+<text fill="#000000" font-family="'Montez', cursive" font-size="10" x="32" y="22">₹</text>
+</pattern>
+</defs>
+<rect fill="url(#grid-doodle)" height="100%" width="100%"></rect>
+</svg>
+</div>
+<!-- ============================================== -->
+<!-- VIEW 1: DASHBOARD VIEW (Default active)       -->
+<!-- ============================================== -->
+<div class="flex flex-col w-full relative z-10" id="view-dashboard">
+<!-- Top Header Navigation -->
+<div class="relative z-30 flex items-center justify-between w-full pt-1 pb-1.5">
+<!-- Change Logo in Header -->
+<div class="flex items-center cursor-pointer" onclick="replayIntro()" title="Change Finance">
+<img alt="Change Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2MB0ly1cOQqqujsHnO4sC536PlARRpav--zW4PiK9lPSrLjpsgsAvMOwv6r2ee16m-DzQebaaZ1KxGWkb0zxidLaQ36pFrrjXcVi7Yc7Ry9kbQwK4DmT3EPDCNNhlXwXmIF8krf0qA824L1Ulj1nibxc22slT8QlGHqww883o3UnBob-5OXNNm-w6Gr5mySA_6nEwQWuM2dsWpd3PSQUjRRTXpza6XyGFIS5tD1L5FEK6s0XdTFggWXblkLIUXrzhAA">
+</div>
+<!-- Header Action Buttons -->
+<div class="relative flex items-center gap-1.5">
+<button aria-label="Notifications" class="w-7 h-7 rounded-full bg-surface-container-low hover:bg-surface-container flex items-center justify-center text-primary active:scale-95 transition-transform border border-black/5 cursor-pointer" onclick="alert('No unread notifications')">
+<span class="material-symbols-outlined text-[16px]">notifications</span>
+</button>
+<!-- Filter / Menu Button with Dropdown Container -->
+<div class="relative">
+<button aria-expanded="false" aria-haspopup="true" aria-label="Menu" class="w-7 h-7 rounded-full bg-surface-container-low hover:bg-surface-container flex items-center justify-center text-primary active:scale-95 transition-all border border-black/5 cursor-pointer" id="header-menu-btn" onclick="toggleHeaderMenu(event)">
+<span class="material-symbols-outlined text-[16px] transition-transform duration-200" id="header-menu-icon">menu</span>
+</button>
+<!-- Doodle-Styled Dropdown Menu -->
+<div class="absolute right-0 top-full mt-2 w-52 bg-white sketch-dropdown z-50 p-1.5 transition-all duration-200 ease-out origin-top-right transform opacity-0 scale-95 pointer-events-none -translate-y-1" id="header-menu-dropdown" onclick="event.stopPropagation()">
+<div class="px-2 pt-1 pb-1 border-b border-black/10 flex items-center justify-between">
+<span class="font-montez text-sm text-secondary leading-none">Quick Actions</span>
+<svg class="w-4 h-2 text-primary/40" fill="none" viewBox="0 0 24 8">
+<path d="M1 4 C6 1, 10 7, 15 4 C18 2, 21 6, 23 4" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"></path>
+</svg>
+</div>
+<div class="flex flex-col py-1">
+<!-- Option 1: Add Budget -->
+<button class="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-left hover:bg-surface-container-low active:bg-surface-container transition-colors group cursor-pointer" onclick="handleMenuOption('add-budget', event)">
+<div class="w-7 h-7 rounded-full border border-black/80 flex items-center justify-center bg-surface-container-low group-hover:bg-white group-hover:scale-105 transition-all flex-shrink-0">
+<svg class="w-3.5 h-3.5 text-primary" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" viewBox="0 0 16 16">
+<path d="M8 2.5 C8 4.5, 7.8 11.5, 8 13.5"></path>
+<path d="M2.5 8 C4.5 8, 11.5 7.8, 13.5 8"></path>
+</svg>
+</div>
+<span class="font-montez text-xl text-primary leading-tight flex-1">Add Budget</span>
+</button>
+<!-- Option 2: Analytics / Reports -->
+<button class="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-left hover:bg-surface-container-low active:bg-surface-container transition-colors group cursor-pointer" onclick="closeHeaderMenu(); showAnalyticsScreen();">
+<div class="w-7 h-7 rounded-full border border-black/80 flex items-center justify-center bg-surface-container-low group-hover:bg-white group-hover:scale-105 transition-all flex-shrink-0">
+<svg class="w-3.5 h-3.5 text-primary" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 16 16">
+<line x1="3" x2="3" y1="13.5" y2="8.5"></line>
+<line x1="8" x2="8" y1="13.5" y2="3.5"></line>
+<line x1="13" x2="13" y1="13.5" y2="6"></line>
+<path d="M1.5 13.5 H14.5" stroke-linecap="round" stroke-width="1.8"></path>
+</svg>
+</div>
+<span class="font-montez text-xl text-primary leading-tight flex-1">Analytics / Reports</span>
+</button>
+<!-- Option 3: Settings -->
+<button class="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-xl text-left hover:bg-surface-container-low active:bg-surface-container transition-colors group cursor-pointer" onclick="handleMenuOption('settings', event)">
+<div class="w-7 h-7 rounded-full border border-black/80 flex items-center justify-center bg-surface-container-low group-hover:bg-white group-hover:scale-105 transition-all flex-shrink-0">
+<svg class="w-3.5 h-3.5 text-primary" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewBox="0 0 18 18">
+<circle cx="9" cy="9" r="2.8"></circle>
+<path d="M9 1.8 v2 M9 14.2 v2 M1.8 9 h2 M14.2 9 h2 M3.8 3.8 l1.4 1.4 M12.8 12.8 l1.4 1.4 M3.8 14.2 l1.4 -1.4 M12.8 5.2 l1.4 -1.4"></path>
+</svg>
+</div>
+<span class="font-montez text-xl text-primary leading-tight flex-1">Settings</span>
+</button>
+</div>
+<div class="pt-0.5 pb-0.5 border-t border-black/10 px-2 flex items-center justify-between">
+<span class="font-montez text-xs text-secondary/80">Change v1.2</span>
+<div class="flex gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-primary/30"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-primary/60"></span>
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Available Balance Hero (Clickable to switch to Analytics view) -->
+<div class="relative z-10 flex flex-col items-center justify-center pt-0.5 pb-1 text-center cursor-pointer group active:scale-98 transition-transform" onclick="showAnalyticsScreen()" title="Click to view Analytics &amp; Balance">
+<div class="relative my-0.5">
+<div class="font-montez text-5xl text-primary font-normal leading-none tracking-tight group-hover:scale-105 transition-transform">
+          $2,450
+        </div>
+<svg class="w-28 h-2 mx-auto text-primary mt-0.5" fill="none" viewBox="0 0 144 10">
+<path d="M2 7.5C18 3.5 35 8.5 52 5C68 1.5 86 8.5 103 4.5C118 1 131 7 142 5" stroke="currentColor" stroke-linecap="round" stroke-width="2.5"></path>
+</svg>
+</div>
+<div class="inline-flex items-center bg-surface-container-high px-2.5 py-0.5 rounded-full text-[11px] text-primary font-medium mt-0.5">
+<span class="">~ This month's left-to-spend</span>
+</div>
+</div>
+<!-- RESTORED PIE CHART CARD WITH ZERO PORTIONS CLICKED INITIALLY -->
+<div class="relative z-10 bg-[#ffffff] rounded-2xl p-3 my-1.5 shadow-sm border border-black/5 flex flex-col items-center">
+<div class="flex items-center justify-between w-full mb-0.5">
+<div class="flex items-center gap-1.5">
+<span class="font-montez text-xl text-primary font-normal">Monthly Outflow</span>
+<span class="font-mono text-[9px] bg-surface-container px-1 py-0.5 rounded text-secondary font-semibold">Oct 2024</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="font-space text-xs font-semibold text-primary">$1,850 Total</span>
+<span class="text-[10px] text-secondary font-mono tracking-tighter" id="tap-hint-pill">(tap slice)</span>
+</div>
+</div>
+<div class="relative w-44 h-44 my-0.5 flex items-center justify-center">
+<!-- Starts rotating smoothly with 0 portions selected initially -->
+<svg class="w-full h-full pie-rotating overflow-visible" fill="none" id="pie-wheel-svg" viewBox="0 0 200 200">
+<g aria-label="Essentials slice 48 percent" class="slice-interactive" id="slice-essentials" onclick="selectCategory('essentials', event)" role="button" tabindex="0">
+<path d="M 100 20 A 80 80 0 0 1 179.3 110.1 L 149.6 106.3 A 50 50 0 0 0 100 50 Z" fill="#d4d4d8"></path>
+<path d="M 100 20 A 80 80 0 0 1 179.3 110.1 L 149.6 106.3 A 50 50 0 0 0 100 50 Z" fill="url(#doodleHatch)" stroke="#1a1a1a" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"></path>
+<path d="M 101 22 A 79 79 0 0 1 178 109 L 149 106 A 49 49 0 0 0 101 51 Z" fill="none" opacity="0.6" stroke="#262626" stroke-dasharray="8 4" stroke-width="1"></path>
+</g>
+<g aria-label="Fun and Life slice 32 percent" class="slice-interactive" id="slice-fun" onclick="selectCategory('fun', event)" role="button" tabindex="0">
+<path d="M 179.3 110.1 A 80 80 0 0 1 23.9 124.7 L 52.4 115.4 A 50 50 0 0 0 149.6 106.3 Z" fill="#e4e4e7"></path>
+<path d="M 179.3 110.1 A 80 80 0 0 1 23.9 124.7 L 52.4 115.4 A 50 50 0 0 0 149.6 106.3 Z" fill="url(#doodleDots)" stroke="#1a1a1a" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"></path>
+<path d="M 178 111 A 79 79 0 0 1 25.5 124 L 53 115 A 49 49 0 0 0 148 106 Z" fill="none" opacity="0.5" stroke="#262626" stroke-dasharray="6 3" stroke-width="1"></path>
+</g>
+<g aria-label="Savings slice 20 percent" class="slice-interactive" id="slice-savings" onclick="selectCategory('savings', event)" role="button" tabindex="0">
+<path d="M 23.9 124.7 A 80 80 0 0 1 100 20 L 100 50 A 50 50 0 0 0 52.4 115.4 Z" fill="#f4f4f5"></path>
+<path d="M 23.9 124.7 A 80 80 0 0 1 100 20 L 100 50 A 50 50 0 0 0 52.4 115.4 Z" fill="url(#doodleRupee)" stroke="#1a1a1a" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2"></path>
+<path d="M 25.5 123.5 A 79 79 0 0 1 99 22 L 99 51 A 49 49 0 0 0 53 115 Z" fill="none" opacity="0.5" stroke="#262626" stroke-dasharray="5 3" stroke-width="1"></path>
+</g>
+<circle cx="100" cy="100" fill="none" pointer-events="none" r="80" stroke="#1a1a1a" stroke-linecap="round" stroke-width="2.2"></circle>
+<circle cx="100" cy="100" fill="none" pointer-events="none" r="50" stroke="#1a1a1a" stroke-linecap="round" stroke-width="2.2"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none" id="donut-center-readout">
+<span class="font-mono text-[8px] uppercase tracking-wider text-secondary font-bold" id="center-title">Burn Rate</span>
+<span class="font-montez text-3xl text-primary font-normal leading-none my-0.5" id="center-stat">57%</span>
+<span class="font-mono text-[9px] text-primary font-medium tracking-tight" id="center-subtitle">On Track</span>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-1.5 w-full pt-1">
+<button class="flex flex-col items-center py-1.5 px-1 rounded-xl bg-surface-container-low text-center border border-black/5 hover:border-black/30 active:scale-95 transition-all cursor-pointer" id="pill-essentials" onclick="selectCategory('essentials', event)" type="button">
+<div class="w-3.5 h-3.5 rounded-full border border-black/80 mb-0.5 overflow-hidden" style="background: repeating-linear-gradient(45deg, #18181b, #18181b 2px, #d4d4d8 2px, #d4d4d8 4px); background-color: #d4d4d8;"></div>
+<span class="font-space text-[11px] font-semibold text-primary leading-tight">Essentials</span>
+<span class="font-mono text-[9px] text-secondary mt-0.5">48% - $888</span>
+</button>
+<button class="flex flex-col items-center py-1.5 px-1 rounded-xl bg-surface-container-low text-center border border-black/5 hover:border-black/30 active:scale-95 transition-all cursor-pointer" id="pill-fun" onclick="selectCategory('fun', event)" type="button">
+<div class="w-3.5 h-3.5 rounded-full border border-black/80 mb-0.5 overflow-hidden" style="background-color: #e4e4e7; background-image: radial-gradient(#52525b 1.5px, transparent 1.5px); background-size: 5px 5px;"></div>
+<span class="font-space text-[11px] font-semibold text-primary leading-tight">Fun &amp; Life</span>
+<span class="font-mono text-[9px] text-secondary mt-0.5">32% - $592</span>
+</button>
+<button class="flex flex-col items-center py-1.5 px-1 rounded-xl bg-surface-container-low text-center border border-black/5 hover:border-black/30 active:scale-95 transition-all cursor-pointer" id="pill-savings" onclick="selectCategory('savings', event)" type="button">
+<div class="w-3.5 h-3.5 rounded-full border border-black/80 mb-0.5 bg-[#f4f4f5] flex items-center justify-center text-[8px] font-bold text-zinc-700 leading-none">₹</div>
+<span class="font-space text-[11px] font-semibold text-primary leading-tight">Savings</span>
+<span class="font-mono text-[9px] text-secondary mt-0.5">20% - $370</span>
+</button>
+</div>
+<!-- Detail card is initially HIDDEN (zero portions active on start) -->
+<div class="w-full mt-2.5 pt-2 border-t border-black/10 flex-col text-left transition-all duration-300 transform scale-100 opacity-100 hidden" id="segment-detail-card">
+<div class="bg-surface-container-low/70 rounded-xl p-2.5 border border-black/15 shadow-xs sketch-card relative">
+<button aria-label="Close category details" class="absolute top-2 right-2 w-6 h-6 rounded-full bg-white hover:bg-surface-container flex items-center justify-center border border-black/20 text-primary text-xs active:scale-90 transition-transform cursor-pointer" onclick="clearCategorySelection(event)">✕</button>
+<div class="flex items-center gap-2 pr-6">
+<div class="w-8 h-8 rounded-full border border-black/70 flex items-center justify-center bg-white text-base" id="detail-badge-icon">🛒</div>
+<div class="flex flex-col">
+<span class="font-montez text-2xl text-primary leading-none" id="detail-title">Essentials</span>
+<span class="font-mono text-[10px] text-secondary" id="detail-subtitle">48% of outflow • Burn 88.8%</span>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-1.5 mt-2 pt-2 border-t border-black/10 text-center">
+<div class="flex flex-col"><span class="font-mono text-[8px] uppercase tracking-wider text-secondary">Spent</span><div class="font-montez text-2xl text-primary leading-none mt-0.5" id="detail-spent">$888.00</div></div>
+<div class="flex flex-col"><span class="font-mono text-[8px] uppercase tracking-wider text-secondary">Budget</span><div class="font-montez text-2xl text-primary leading-none mt-0.5" id="detail-budget">$1,000.00</div></div>
+<div class="flex flex-col"><span class="font-mono text-[8px] uppercase tracking-wider text-secondary">Remaining</span><div class="font-montez text-2xl text-primary leading-none mt-0.5" id="detail-remaining">$112.00</div></div>
+</div>
+<div class="mt-2">
+<div class="w-full py-1 relative flex items-center">
+<svg class="w-full h-5 overflow-visible" preserveAspectRatio="none" viewBox="0 0 280 18">
+<path d="M 2 9 Q 25 2, 50 10 T 98 9 T 146 10 T 194 8 T 242 10 T 278 9" fill="none" stroke="#e2e2e2" stroke-dasharray="4 3" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"></path>
+<path d="M 2 9 Q 25 2, 50 10 T 98 9 T 146 10 T 194 8 T 242 10 T 278 9" fill="none" id="detail-wiggle-track" stroke="#1a1a1a" stroke-linecap="round" stroke-linejoin="round" stroke-opacity="0.15" stroke-width="6"></path>
+<path d="M 2 9 Q 25 2, 50 10 T 98 9 T 146 10 T 194 8 T 242 10 T 278 9" fill="none" id="detail-progress-fill" pathLength="100" stroke="#000000" stroke-dasharray="100" stroke-dashoffset="11.2" stroke-linecap="round" stroke-linejoin="round" stroke-width="4.5" style="transition: stroke-dashoffset 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);"></path>
+<circle cx="247" cy="9.5" fill="#ffffff" id="detail-wiggle-knob" r="4" stroke="#000000" stroke-width="2" style="transition: cx 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);"></circle>
+</svg>
+</div>
+</div>
+<div class="flex items-center gap-2 mt-2.5 pt-1">
+<button class="flex-1 py-1.5 px-3 rounded-full bg-primary text-white text-xs font-medium hover:bg-zinc-800 active:scale-95 transition-all flex items-center justify-center gap-1 shadow-xs cursor-pointer" onclick="showAnalyticsScreen()">
+<span class="material-symbols-outlined text-[15px]">insights</span>
+<span class="font-space text-[11px] font-semibold">View Analytics &amp; Balance</span>
+</button>
+<button class="px-3 py-1.5 rounded-full bg-white text-primary text-xs border border-black/20 hover:bg-surface-container active:scale-95 transition-all font-mono text-[10px] cursor-pointer" onclick="clearCategorySelection(event)">Done</button>
+</div>
+</div>
+</div>
+</div>
+<!-- GEMINI VOICE TRIGGER BUTTON -->
+<div class="relative z-10 flex flex-col items-center justify-center py-2 text-center">
+<div class="relative flex items-center justify-center">
+<div class="absolute -inset-3 rounded-full blur-xl pointer-events-none transition-all duration-500 ease-out opacity-0 scale-90" id="gemini-aura" style="background: conic-gradient(from 0deg, #4285F4, #9B72CB, #EA4335, #FBBC05, #4285F4);"></div>
+<button aria-label="Record voice expense" class="relative z-10 w-16 h-16 rounded-full flex items-center justify-center sketch-border shadow-md active:scale-95 transition-transform duration-200 cursor-pointer bg-[#ffffff] text-primary" id="voice-btn" onclick="toggleVoiceLogging()">
+<span class="material-symbols-outlined text-[30px] transition-transform duration-200" id="mic-icon">mic</span>
+</button>
+</div>
+<div class="mt-1.5 text-center">
+<p class="font-space text-xs font-semibold text-primary" id="voice-status-text">Tap or say "Spent 20 on coffee"</p>
+<p class="font-montez text-base text-secondary leading-tight mt-0.5" id="voice-sub-text">Gemini Instant Expense Capture</p>
+</div>
+</div>
+<!-- TODAY'S EXPENSES NOTES (No modal on See All) -->
+<div class="flex flex-col gap-2 w-full mt-4 pt-1 relative z-10">
+<div class="flex justify-between items-center px-1">
+<span class="font-montez text-2xl text-primary font-normal">Today's Expenses</span>
+<span class="font-mono text-xs text-primary cursor-pointer hover:underline" onclick="showAnalyticsScreen()">See All</span>
+</div>
+<div class="relative z-10 flex items-center justify-between p-3 bg-[#ffffff] rounded-xl shadow-xs border border-black/5 cursor-pointer active:scale-98 transition-transform" onclick="inspectExpenseItem('Artisan Roast &amp; Bun', '$6.50', 'Coffee • 09:42 AM')">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">local_cafe</span>
+</div>
+<div class="flex flex-col">
+<span class="font-space text-sm font-semibold text-primary">Artisan Roast &amp; Bun</span>
+<span class="font-mono text-[11px] text-secondary">09:42 AM - Coffee</span>
+</div>
+</div>
+<span class="font-montez text-2xl text-primary font-normal">-$6.50</span>
+</div>
+<div class="relative z-10 flex items-center justify-between p-3 bg-[#ffffff] rounded-xl shadow-xs border border-black/5 cursor-pointer active:scale-98 transition-transform" onclick="inspectExpenseItem('Metro Transit Pass', '$2.75', 'Commute • 08:15 AM')">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">directions_subway</span>
+</div>
+<div class="flex flex-col">
+<span class="font-space text-sm font-semibold text-primary">Metro Transit Pass</span>
+<span class="font-mono text-[11px] text-secondary">08:15 AM - Commute</span>
+</div>
+</div>
+<span class="font-montez text-2xl text-primary font-normal">-$2.75</span>
+</div>
+</div>
+</div>
+<!-- ============================================== -->
+<!-- VIEW 2: ANALYTICS & BALANCE FULL VIEW        -->
+<!-- ============================================== -->
+<div class="flex-col gap-6 w-full relative z-10 hidden" id="view-analytics">
+<!-- Top Navigation Header with Functional Options Menu -->
+<header class="flex items-center justify-between pt-1 relative">
+<button aria-label="Back to Dashboard" class="w-10 h-10 rounded-full bg-surface-container-lowest flex items-center justify-center text-primary shadow-sm active:scale-95 transition-transform cursor-pointer border border-black/10" onclick="showDashboardScreen()" type="button">
+<span class="material-symbols-outlined text-[22px]">arrow_back</span>
+</button>
+<div class="flex flex-col items-center">
+<div class="flex items-center gap-1.5">
+<svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+<path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+</svg>
+<h1 class="font-headline-sm text-headline-sm text-primary tracking-wide">Analytics &amp; Balance</h1>
+</div>
+</div>
+<!-- Interactive Filter / Settings dropdown toggle -->
+<div class="relative">
+<button aria-label="Budget Options" class="w-10 h-10 rounded-full bg-surface-container-lowest flex items-center justify-center text-primary shadow-sm active:scale-95 transition-transform cursor-pointer border border-black/10" id="analytics-filter-btn" onclick="toggleAnalyticsFilterMenu(event)" type="button">
+<span class="material-symbols-outlined text-[20px]">tune</span>
+</button>
+<!-- Dropdown Menu for Analytics Filters -->
+<div class="absolute right-0 top-full mt-2 w-52 bg-white sketch-dropdown z-50 p-2 shadow-lg transition-all duration-200 origin-top-right transform opacity-0 scale-95 pointer-events-none -translate-y-1" id="analytics-filter-dropdown" onclick="event.stopPropagation()">
+<div class="px-1.5 py-1 border-b border-black/10 flex items-center justify-between">
+<span class="font-montez text-sm text-secondary">Analytics Scope</span>
+<span class="material-symbols-outlined text-[14px] text-secondary">tune</span>
+</div>
+<div class="flex flex-col py-1 gap-1">
+<button class="w-full text-left px-2 py-1.5 rounded-lg text-xs font-semibold hover:bg-surface-container-low active:bg-surface-container flex items-center justify-between cursor-pointer" onclick="setAnalyticsDateScope('This Month (Oct 2024)')">
+<span class="font-montez text-lg text-primary">This Month</span>
+<span class="text-xs">✓</span>
+</button>
+<button class="w-full text-left px-2 py-1.5 rounded-lg text-xs font-semibold hover:bg-surface-container-low active:bg-surface-container flex items-center justify-between cursor-pointer" onclick="setAnalyticsDateScope('Last Month (Sep 2024)')">
+<span class="font-montez text-lg text-primary">Last Month</span>
+</button>
+<button class="w-full text-left px-2 py-1.5 rounded-lg text-xs font-semibold hover:bg-surface-container-low active:bg-surface-container flex items-center justify-between cursor-pointer" onclick="setAnalyticsDateScope('Year-to-date (2024)')">
+<span class="font-montez text-lg text-primary">Year-to-date</span>
+</button>
+<div class="h-[1px] bg-black/10 my-0.5"></div>
+<button class="w-full text-left px-2 py-1.5 rounded-lg text-xs font-semibold hover:bg-surface-container-low active:bg-surface-container flex items-center justify-between cursor-pointer text-primary" onclick="exportAnalyticsReport()">
+<span class="font-montez text-lg">Export CSV Summary</span>
+<span class="material-symbols-outlined text-[15px]">download</span>
+</button>
+</div>
+</div>
+</div>
+</header>
+<!-- Total Budget Burn Rate & Balance Hero Card -->
+<section class="bg-surface-container-lowest rounded-2xl p-5 shadow-sm flex flex-col gap-4 relative overflow-hidden border border-black/5">
+<div class="flex items-center justify-between pb-1">
+<button class="font-label-md text-label-md text-primary bg-surface-container px-2.5 py-0.5 rounded-full hover:bg-surface-container-high transition-colors cursor-pointer" id="analytics-day-indicator" onclick="toggleMonthPickerModal()">
+          Day 26 of 31 • Oct
+        </button>
+<button class="font-montez text-lg text-secondary px-2.5 py-0.5 rounded-full bg-surface-container hover:bg-surface-container-high active:scale-95 transition-all cursor-pointer flex items-center gap-1 shadow-xs" id="analytics-month-pill" onclick="toggleMonthPickerModal()" role="button" type="button">
+<span class="material-symbols-outlined text-[14px]">calendar_today</span><span id="analytics-active-month-label" class="">Oct 2024</span>
+</button>
+</div>
+<!-- Main Highlight Numbers -->
+<div class="flex flex-col items-center justify-center py-2 text-center">
+<span class="font-body-md text-body-md text-secondary mb-0.5">Remaining Balance</span>
+<div class="flex items-baseline justify-center gap-1 text-primary">
+<span class="font-display-lg tracking-tight font-extrabold leading-none text-display-lg" id="analytics-balance-number" style="font-size: 52px; line-height: 1;">$2,450.00</span>
+</div>
+<svg class="w-48 h-3 mt-1 text-primary" fill="none" preserveAspectRatio="none" viewBox="0 0 200 12">
+<path d="M2 6 Q 25 1, 50 6 T 100 6 T 150 6 T 198 6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+</svg>
+</div>
+<!-- Quick Metric Split -->
+<div class="grid grid-cols-2 gap-3 pt-2">
+<div class="bg-surface-container-low rounded-xl p-3 flex flex-col items-center text-center cursor-pointer hover:bg-surface-container transition-colors active:scale-98" onclick="showMetricBreakdown('cap')">
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">Total Cap</span>
+<span class="font-headline-sm text-headline-sm text-primary font-bold mt-0.5" id="metric-cap-val">$4,800.00</span>
+<span class="font-label-sm text-label-sm text-secondary mt-1">100% planned</span>
+</div>
+<div class="bg-surface-container-low rounded-xl p-3 flex flex-col items-center text-center cursor-pointer hover:bg-surface-container transition-colors active:scale-98" onclick="showMetricBreakdown('spent')">
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">Total Spent</span>
+<span class="font-headline-sm text-headline-sm text-primary font-bold mt-0.5" id="metric-spent-val">$1,850.00</span>
+<span class="font-label-sm text-label-sm text-secondary mt-1">43% consumed</span>
+</div>
+</div>
+<!-- Burn Rate Momentum (Interactive Tap) -->
+<div class="flex flex-col gap-1.5 pt-1 cursor-pointer group" onclick="toggleBurnRateDetails()">
+<div class="flex justify-between items-center text-primary font-body-md text-body-md">
+<span class="flex items-center gap-1 group-hover:underline">
+<span class="material-symbols-outlined text-[16px]">draw</span>
+            Burn Momentum
+          </span>
+<span class="font-headline-sm text-headline-sm font-bold" id="analytics-safe-margin-text">57% Safe Margin</span>
+</div>
+<div class="relative w-full h-4 bg-surface-container rounded-full overflow-hidden flex items-center p-0.5">
+<div class="h-full rounded-full bg-primary relative overflow-hidden transition-all duration-500" id="analytics-burn-progress-bar" style="width: 43%;">
+<svg class="absolute inset-0 w-full h-full opacity-35" xmlns="http://www.w3.org/2000/svg">
+<pattern height="6" id="ink-bar-hatch-merged" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse" width="6">
+<line stroke="#ffffff" stroke-width="2" x1="0" x2="0" y1="0" y2="6"></line>
+</pattern>
+<rect fill="url(#ink-bar-hatch-merged)" height="100%" width="100%"></rect>
+</svg>
+</div>
+</div>
+<div class="flex justify-between font-label-sm text-label-sm text-secondary px-0.5">
+<span id="burn-spent-subtext" class="">Spent $1,850.00</span>
+<span id="burn-target-subtext" class="">Target Under $3,800.00</span>
+</div>
+<div class="hidden bg-surface-container-low p-2 rounded-xl text-center border border-black/10 mt-1" id="burn-info-drawer">
+<p class="font-montez text-lg text-primary leading-tight">Burn rate is currently 22% slower than expected pace. Excellent cushion remaining!</p>
+</div>
+</div>
+</section>
+<!-- Portion Carousel Section with Next/Prev and Dot Controls -->
+<section class="flex flex-col gap-3">
+<div class="flex items-center justify-between px-1">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-headline-sm text-primary">Portion Allocation</span>
+<span class="font-label-sm text-label-sm bg-surface-container text-secondary px-2 py-0.5 rounded-full">3 buckets</span>
+</div>
+<div class="flex items-center gap-2">
+<button aria-label="Previous card" class="w-6 h-6 rounded-full bg-surface-container hover:bg-surface-container-high flex items-center justify-center text-primary active:scale-90 cursor-pointer" onclick="scrollCarousel(-1)">
+<span class="material-symbols-outlined text-[14px]">arrow_back</span>
+</button>
+<button aria-label="Next card" class="w-6 h-6 rounded-full bg-surface-container hover:bg-surface-container-high flex items-center justify-center text-primary active:scale-90 cursor-pointer" onclick="scrollCarousel(1)">
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<div class="flex gap-4 overflow-x-auto pb-3 pt-1 px-1 snap-x snap-mandatory scroll-smooth" id="bucket-carousel" onscroll="updateCarouselDots()" style="-ms-overflow-style: none; scrollbar-width: none;">
+<!-- Card 1: Essentials -->
+<article class="min-w-[85%] sm:min-w-[75%] snap-center shrink-0 bg-surface-container-lowest rounded-2xl p-4 shadow-sm flex flex-col justify-between gap-3 border border-black/5 cursor-pointer hover:border-black/30 transition-all" onclick="openTransactionsModal('essentials')">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">local_grocery_store</span>
+</div>
+<div class="flex flex-col">
+<h2 class="font-headline-sm text-headline-sm text-primary leading-tight">Essentials</h2>
+<span class="font-label-sm text-label-sm text-secondary">Rent, Groceries &amp; Bills</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm px-2.5 py-1 rounded-full bg-surface-container text-primary font-semibold">
+              49% Spent
+            </span>
+</div>
+<div class="grid grid-cols-2 gap-2 bg-surface-container-low rounded-xl p-2.5">
+<div>
+<span class="font-label-sm text-label-sm text-secondary">Used</span>
+<p class="font-title-md text-title-md text-primary font-bold">$888.00</p>
+</div>
+<div>
+<span class="font-label-sm text-label-sm text-secondary">Left of $1,800</span>
+<p class="font-title-md text-title-md text-primary font-bold">$912.00</p>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<div class="w-full h-3 bg-surface-container rounded-full overflow-hidden p-0.5">
+<div class="h-full bg-primary rounded-full" style="width: 49.3%;"></div>
+</div>
+<div class="flex items-center justify-between text-secondary font-label-sm text-label-sm pt-0.5">
+<span class="truncate">Top: Organic Co-op Market ($64.20)</span>
+<span class="material-symbols-outlined text-[14px]">receipt_long</span>
+</div>
+</div>
+</article>
+<!-- Card 2: Fun & Life -->
+<article class="min-w-[85%] sm:min-w-[75%] snap-center shrink-0 bg-surface-container-lowest rounded-2xl p-4 shadow-sm flex flex-col justify-between gap-3 border border-black/5 cursor-pointer hover:border-black/30 transition-all" onclick="openTransactionsModal('fun')">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">coffee</span>
+</div>
+<div class="flex flex-col">
+<h2 class="font-headline-sm text-headline-sm text-primary leading-tight">Fun &amp; Life</h2>
+<span class="font-label-sm text-label-sm text-secondary">Dining, Vinyl &amp; Cinema</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm px-2.5 py-1 rounded-full bg-surface-container text-primary font-semibold">
+              49% Spent
+            </span>
+</div>
+<div class="grid grid-cols-2 gap-2 bg-surface-container-low rounded-xl p-2.5">
+<div>
+<span class="font-label-sm text-label-sm text-secondary">Used</span>
+<p class="font-title-md text-title-md text-primary font-bold">$592.00</p>
+</div>
+<div>
+<span class="font-label-sm text-label-sm text-secondary">Left of $1,200</span>
+<p class="font-title-md text-title-md text-primary font-bold">$608.00</p>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<div class="w-full h-3 bg-surface-container rounded-full overflow-hidden p-0.5">
+<div class="h-full bg-primary rounded-full" style="width: 49.3%;"></div>
+</div>
+<div class="flex items-center justify-between text-secondary font-label-sm text-label-sm pt-0.5">
+<span class="truncate">Top: Weekend Concert ($32.00)</span>
+<span class="material-symbols-outlined text-[14px]">confirmation_number</span>
+</div>
+</div>
+</article>
+<!-- Card 3: Savings -->
+<article class="min-w-[85%] sm:min-w-[75%] snap-center shrink-0 bg-surface-container-lowest rounded-2xl p-4 shadow-sm flex flex-col justify-between gap-3 border border-black/5 cursor-pointer hover:border-black/30 transition-all" onclick="openTransactionsModal('savings')">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">savings</span>
+</div>
+<div class="flex flex-col">
+<h2 class="font-headline-sm text-headline-sm text-primary leading-tight">Savings &amp; Growth</h2>
+<span class="font-label-sm text-label-sm text-secondary">Rainy Day, SIP &amp; Goals</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm px-2.5 py-1 rounded-full bg-surface-container text-primary font-semibold">
+              37% Stashed
+            </span>
+</div>
+<div class="grid grid-cols-2 gap-2 bg-surface-container-low rounded-xl p-2.5">
+<div>
+<span class="font-label-sm text-label-sm text-secondary">Secured</span>
+<p class="font-title-md text-title-md text-primary font-bold">$370.00</p>
+</div>
+<div>
+<span class="font-label-sm text-label-sm text-secondary">Goal $1,000</span>
+<p class="font-title-md text-title-md text-primary font-bold">$630.00</p>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<div class="w-full h-3 bg-surface-container rounded-full overflow-hidden p-0.5">
+<div class="h-full bg-primary rounded-full" style="width: 37%;"></div>
+</div>
+<div class="flex items-center justify-between text-secondary font-label-sm text-label-sm pt-0.5">
+<span class="truncate">Auto-Sweep: Index SIP ($150.00)</span>
+<span class="material-symbols-outlined text-[14px]">trending_up</span>
+</div>
+</div>
+</article>
+</div>
+<!-- Dot indicators for carousel -->
+<div class="flex items-center justify-center gap-1.5 pt-0.5">
+<span class="w-2 h-2 rounded-full bg-primary transition-all cursor-pointer" id="dot-0" onclick="goToCarouselSlide(0)"></span>
+<span class="w-2 h-2 rounded-full bg-primary/30 transition-all cursor-pointer" id="dot-1" onclick="goToCarouselSlide(1)"></span>
+<span class="w-2 h-2 rounded-full bg-primary/30 transition-all cursor-pointer" id="dot-2" onclick="goToCarouselSlide(2)"></span>
+</div>
+</section>
+<!-- Expense Rhythm Bar Chart Section -->
+<section class="bg-surface-container-lowest rounded-2xl p-5 shadow-sm flex flex-col gap-4 border border-black/5" id="section-expense-rhythm">
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<h2 class="font-headline-sm text-headline-sm text-primary">Expense Rhythm</h2>
+</div>
+<div class="bg-surface-container p-1 rounded-full flex items-center">
+<button class="px-3 py-1 rounded-full font-label-sm text-label-sm transition-all duration-200 text-secondary cursor-pointer" id="tab-btn-weekly" onclick="switchChartPeriod('weekly')" type="button">
+            Weekly
+          </button>
+<button class="px-3 py-1 rounded-full font-label-sm text-label-sm transition-all duration-200 bg-primary text-on-primary cursor-pointer" id="tab-btn-monthly" onclick="switchChartPeriod('monthly')" type="button">
+            Monthly
+          </button>
+</div>
+</div>
+<!-- Weekly Rhythm Chart -->
+<div class="flex-col gap-3 hidden" id="chart-view-weekly">
+<div class="bg-surface-container-low px-3 py-2 rounded-xl flex items-center justify-between border border-black/5">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px] text-primary">insights</span>
+<span class="font-label-md text-label-md text-secondary" id="chart-tooltip-label">Tap any day bar for details</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-primary font-bold" id="chart-tooltip-val">$960 total</span>
+</div>
+<div class="h-44 w-full flex items-end justify-between gap-2 pt-6 pb-2 px-1 relative">
+<div class="flex-1 flex flex-col items-center h-full justify-end cursor-pointer group" onclick="showChartValue('Mon', '$42.00', 'Groceries &amp; Bus')">
+<span class="font-label-sm text-label-sm text-secondary opacity-0 group-hover:opacity-100 transition-opacity mb-1">$42</span>
+<div class="w-full max-w-[28px] bg-surface-container-highest group-hover:bg-primary transition-colors rounded-t-lg relative" style="height: 18%;"></div>
+<span class="font-label-sm text-label-sm text-primary mt-2">M</span>
+</div>
+<div class="flex-1 flex flex-col items-center h-full justify-end cursor-pointer group" onclick="showChartValue('Tue', '$85.00', 'Pharmacy &amp; Supplies')">
+<span class="font-label-sm text-label-sm text-secondary opacity-0 group-hover:opacity-100 transition-opacity mb-1">$85</span>
+<div class="w-full max-w-[28px] bg-surface-container-highest group-hover:bg-primary transition-colors rounded-t-lg relative" style="height: 32%;"></div>
+<span class="font-label-sm text-label-sm text-primary mt-2">T</span>
+</div>
+<div class="flex-1 flex flex-col items-center h-full justify-end cursor-pointer group" onclick="showChartValue('Wed', '$65.00', 'Cafe &amp; Co-work')">
+<span class="font-label-sm text-label-sm text-secondary opacity-0 group-hover:opacity-100 transition-opacity mb-1">$65</span>
+<div class="w-full max-w-[28px] bg-surface-container-highest group-hover:bg-primary transition-colors rounded-t-lg relative" style="height: 25%;"></div>
+<span class="font-label-sm text-label-sm text-primary mt-2">W</span>
+</div>
+<div class="flex-1 flex flex-col items-center h-full justify-end cursor-pointer group" onclick="showChartValue('Thu', '$120.00', 'Electric Bill')">
+<span class="font-label-sm text-label-sm text-secondary opacity-0 group-hover:opacity-100 transition-opacity mb-1">$120</span>
+<div class="w-full max-w-[28px] bg-surface-container-highest group-hover:bg-primary transition-colors rounded-t-lg relative" style="height: 44%;"></div>
+<span class="font-label-sm text-label-sm text-primary mt-2">T</span>
+</div>
+<div class="flex-1 flex flex-col items-center h-full justify-end cursor-pointer group" onclick="showChartValue('Fri', '$210.00', 'Dinner &amp; Cinema')">
+<span class="font-label-sm text-label-sm text-secondary opacity-0 group-hover:opacity-100 transition-opacity mb-1">$210</span>
+<div class="w-full max-w-[28px] bg-surface-container-highest group-hover:bg-primary transition-colors rounded-t-lg relative" style="height: 68%;"></div>
+<span class="font-label-sm text-label-sm text-primary mt-2">F</span>
+</div>
+<div class="flex-1 flex flex-col items-center h-full justify-end cursor-pointer group" onclick="showChartValue('Sat (Peak)', '$340.00', 'Farmer Market &amp; Clothing')">
+<span class="font-label-sm text-label-sm text-secondary opacity-0 group-hover:opacity-100 transition-opacity mb-1">$340</span>
+<div class="w-full max-w-[28px] bg-primary rounded-t-lg relative flex items-center justify-center" style="height: 98%;">
+<span class="material-symbols-outlined text-on-primary text-[14px]">star</span>
+</div>
+<span class="font-label-sm text-label-sm text-primary font-bold mt-2">S</span>
+</div>
+<div class="flex-1 flex flex-col items-center h-full justify-end cursor-pointer group" onclick="showChartValue('Sun', '$95.00', 'Bookstore &amp; Lunch')">
+<span class="font-label-sm text-label-sm text-secondary opacity-0 group-hover:opacity-100 transition-opacity mb-1">$95</span>
+<div class="w-full max-w-[28px] bg-surface-container-highest group-hover:bg-primary transition-colors rounded-t-lg relative" style="height: 36%;"></div>
+<span class="font-label-sm text-label-sm text-primary mt-2">S</span>
+</div>
+</div>
+</div>
+<!-- Monthly Breakdown Chart -->
+<div class="flex-col gap-3 flex" id="chart-view-monthly">
+<div class="bg-surface-container-low px-3 py-2 rounded-xl flex items-center justify-between border border-black/5">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px] text-primary">calendar_month</span>
+<span class="font-label-md text-label-md text-secondary" id="chart-month-tooltip-label">Tap week for breakdown</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-primary font-bold" id="chart-month-tooltip-val">$1,850 MTD</span>
+</div>
+<div class="h-44 w-full flex items-end justify-around gap-4 pt-6 pb-2 px-3 relative">
+<div class="flex-1 flex flex-col items-center h-full justify-end cursor-pointer group" onclick="showMonthValue('Week 1 (Oct 1-7)', '$480.00', 'Groceries &amp; transit start')">
+<span class="font-label-sm text-label-sm text-secondary opacity-0 group-hover:opacity-100 transition-opacity mb-1">$480</span>
+<div class="w-full max-w-[36px] bg-surface-container-highest group-hover:bg-primary transition-colors rounded-t-lg relative" id="bar-w1" style="height: 55%;"></div>
+<span class="font-label-sm text-label-sm text-primary mt-2">W1</span>
+</div>
+<div class="flex-1 flex flex-col items-center h-full justify-end cursor-pointer group" onclick="showMonthValue('Week 2 (Oct 8-14)', '$510.00', 'Utilities &amp; dining out')">
+<span class="font-label-sm text-label-sm text-secondary opacity-0 group-hover:opacity-100 transition-opacity mb-1">$510</span>
+<div class="w-full max-w-[36px] bg-surface-container-highest group-hover:bg-primary transition-colors rounded-t-lg relative" id="bar-w2" style="height: 60%;"></div>
+<span class="font-label-sm text-label-sm text-primary mt-2">W2</span>
+</div>
+<div class="flex-1 flex flex-col items-center h-full justify-end cursor-pointer group" onclick="showMonthValue('Week 3 (Oct 15-21)', '$590.00', 'SIP deposit + social dinner')">
+<span class="font-label-sm text-label-sm text-secondary opacity-0 group-hover:opacity-100 transition-opacity mb-1">$590</span>
+<div class="w-full max-w-[36px] bg-primary rounded-t-lg relative flex items-center justify-center" id="bar-w3" style="height: 78%;">
+<span class="material-symbols-outlined text-on-primary text-[14px]">bolt</span>
+</div>
+<span class="font-label-sm text-label-sm text-primary font-bold mt-2">W3</span>
+</div>
+<div class="flex-1 flex flex-col items-center h-full justify-end cursor-pointer group" onclick="showMonthValue('Week 4 (Oct 22-26)', '$270.00', 'Current week active')">
+<span class="font-label-sm text-label-sm text-secondary opacity-0 group-hover:opacity-100 transition-opacity mb-1">$270</span>
+<div class="w-full max-w-[36px] bg-surface-container-highest group-hover:bg-primary transition-colors rounded-t-lg relative" id="bar-w4" style="height: 34%;"></div>
+<span class="font-label-sm text-label-sm text-primary mt-2">W4</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-surface-container font-body-md text-body-md text-secondary">
+<span class="">Weekly Avg: <strong class="text-primary font-headline-sm text-headline-sm">$462.50</strong></span>
+<span class="text-primary font-body-md text-body-md">On pace with $4,800 cap</span>
+</div>
+</div>
+</section>
+<!-- Spend Calendar Section (Fully togglable via bottom button) -->
+<section class="bg-surface-container-lowest rounded-2xl p-5 shadow-sm flex-col gap-3.5 hidden border border-black/5" id="section-spend-calendar"><div class="flex items-center justify-between pb-1 border-b border-surface-container"><div class="flex items-center gap-2"><span class="material-symbols-outlined text-[20px] text-primary">calendar_month</span><h2 class="font-montez text-2xl text-primary font-bold leading-none">October 2024 Spend Calendar</h2></div><div class="flex items-center gap-1.5"><button aria-label="Previous Month" class="w-7 h-7 rounded-full bg-surface-container hover:bg-surface-container-high flex items-center justify-center text-primary text-xs active:scale-95 transition-all cursor-pointer border border-black/10" onclick="alert('September 2024: $1,680.00 total spend')" type="button"><span class="material-symbols-outlined text-[14px]">arrow_back</span></button><button aria-label="Next Month" class="w-7 h-7 rounded-full bg-surface-container hover:bg-surface-container-high flex items-center justify-center text-primary text-xs active:scale-95 transition-all cursor-pointer border border-black/10" onclick="alert('November 2024 upcoming')" type="button"><span class="material-symbols-outlined text-[14px]">arrow_forward</span></button><button aria-label="Close Spend Calendar" class="w-7 h-7 rounded-full bg-surface-container hover:bg-surface-container-high flex items-center justify-center text-primary text-xs active:scale-95 transition-all cursor-pointer border border-black/10 ml-1" onclick="toggleSpendCalendar()" type="button">✕</button></div></div><div class="bg-surface-container-low px-3 py-2 rounded-xl flex items-center justify-between" id="cal-selected-banner"><div class="flex items-center gap-1.5 truncate"><span class="material-symbols-outlined text-[17px] text-primary">draw</span><span class="font-montez text-lg text-secondary truncate" id="cal-selected-label">Oct 26 • Farmers Market &amp; Lunch</span></div><span class="font-montez text-2xl text-primary font-bold shrink-0 ml-2" id="cal-selected-amount">$42.00</span></div><div class="grid grid-cols-7 text-center font-montez text-lg text-secondary border-b border-surface-container-high pb-1 pt-0.5"><span class="">S</span><span class="">M</span><span class="">T</span><span class="">W</span><span class="">T</span><span class="">F</span><span class="">S</span></div><div class="grid grid-cols-7 gap-1 text-center" id="calendar-day-grid"><div class="p-1 opacity-20 flex flex-col items-center justify-center"><span class="font-montez text-base text-secondary">29</span></div><div class="p-1 opacity-20 flex flex-col items-center justify-center"><span class="font-montez text-base text-secondary">30</span></div><button class="cal-day-cell flex flex-col items-center justify-center p-1 rounded-lg hover:bg-surface-container-high transition-colors active:scale-95 cursor-pointer" onclick="selectCalendarDay('Oct 1', '$38.00', 'Transit Pass &amp; Groceries')" type="button"><span class="font-montez text-base text-primary">1</span><span class="font-montez text-xs text-secondary leading-tight">$38</span></button><button class="cal-day-cell flex flex-col items-center justify-center p-1 rounded-lg hover:bg-surface-container-high transition-colors active:scale-95 cursor-pointer" onclick="selectCalendarDay('Oct 2', '$22.00', 'Cafe &amp; Stationery')" type="button"><span class="font-montez text-base text-primary">2</span><span class="font-montez text-xs text-secondary leading-tight">$22</span></button><button class="cal-day-cell flex flex-col items-center justify-center p-1 rounded-lg hover:bg-surface-container-high transition-colors active:scale-95 cursor-pointer" onclick="selectCalendarDay('Oct 3', '$64.00', 'Pharmacy &amp; Supplies')" type="button"><span class="font-montez text-base text-primary">3</span><span class="font-montez text-xs text-secondary leading-tight">$64</span></button><button class="cal-day-cell flex flex-col items-center justify-center p-1 rounded-lg hover:bg-surface-container-high transition-colors active:scale-95 cursor-pointer" onclick="selectCalendarDay('Oct 4', '$85.00', 'Co-op Groceries')" type="button"><span class="font-montez text-base text-primary">4</span><span class="font-montez text-xs text-secondary leading-tight">$85</span></button><button class="cal-day-cell calendar-doodle-circle bg-surface-container flex flex-col items-center justify-center p-1 rounded-lg hover:bg-surface-container-high transition-colors active:scale-95 cursor-pointer" onclick="selectCalendarDay('Oct 5 (Peak)', '$145.00', 'Dinner &amp; Cinema Outing')" type="button"><span class="font-montez text-base text-primary font-bold">5</span><span class="font-montez text-xs text-primary font-bold leading-tight">$145</span></button><button class="cal-day-cell flex flex-col items-center justify-center p-1 rounded-lg hover:bg-surface-container-high transition-colors active:scale-95 cursor-pointer" onclick="selectCalendarDay('Oct 6', '$0.00', 'No-Spend Sunday 🌱')" type="button"><span class="font-montez text-base text-secondary">6</span><span class="font-montez text-xs text-secondary/60 leading-tight">$0</span></button><button class="cal-day-cell flex flex-col items-center justify-center p-1 rounded-lg hover:bg-surface-container-high transition-colors active:scale-95 cursor-pointer" onclick="selectCalendarDay('Oct 7', '$18.00', 'Morning Matcha &amp; Bagel')" type="button"><span class="font-montez text-base text-primary">7</span><span class="font-montez text-xs text-secondary leading-tight">$18</span></button><button class="cal-day-cell flex flex-col items-center justify-center p-1 rounded-lg hover:bg-surface-container-high transition-colors active:scale-95 cursor-pointer" onclick="selectCalendarDay('Oct 8', '$92.00', 'Internet &amp; Utilities')" type="button"><span class="font-montez text-base text-primary">8</span><span class="font-montez text-xs text-secondary leading-tight">$92</span></button><button class="cal-day-cell flex flex-col items-center justify-center p-1 rounded-lg hover:bg-surface-container-high transition-colors active:scale-95 cursor-pointer" onclick="selectCalendarDay('Oct 9', '$44.00', 'Local Deli Market')" type="button"><span class="font-montez text-base text-primary">9</span><span class="font-montez text-xs text-secondary leading-tight">$44</span></button><button class="cal-day-cell flex flex-col items-center justify-center p-1 rounded-lg hover:bg-surface-container-high transition-colors active:scale-95 cursor-pointer" onclick="selectCalendarDay('Oct 10', '$31.00', 'Gas &amp; Station snacks')" type="button"><span class="font-montez text-base text-primary">10</span><span class="font-montez text-xs text-secondary leading-tight">$31</span></button><button class="cal-day-cell flex flex-col items-center justify-center p-1 rounded-lg hover:bg-surface-container-high transition-colors active:scale-95 cursor-pointer" onclick="selectCalendarDay('Oct 11', '$76.00', 'Dinner with Friends')" type="button"><span class="font-montez text-base text-primary">11</span><span class="font-montez text-xs text-secondary leading-tight">$76</span></button><button class="cal-day-cell calendar-doodle-circle bg-surface-container flex flex-col items-center justify-center p-1 rounded-lg hover:bg-surface-container-high transition-colors active:scale-95 cursor-pointer" onclick="selectCalendarDay('Oct 12', '$110.00', 'Travel Stash &amp; Gear')" type="button"><span class="font-montez text-base text-primary font-bold">12</span><span class="font-montez text-xs text-primary font-bold leading-tight">$110</span></button><button class="cal-day-cell flex flex-col items-center justify-center p-1 rounded-lg hover:bg-surface-container-high transition-colors active:scale-95 cursor-pointer" onclick="selectCalendarDay('Oct 13', '$0.00', 'Quiet Sunday Chill 🌱')" type="button"><span class="font-montez text-base text-secondary">13</span><span class="font-montez text-xs text-secondary/60 leading-tight">$0</span></button><button class="cal-day-cell flex flex-col items-center justify-center p-1 rounded-lg hover:bg-surface-container-high transition-colors active:scale-95 cursor-pointer" onclick="selectCalendarDay('Oct 14', '$25.00', 'Bookstore &amp; Tea')" type="button"><span class="font-montez text-base text-primary">14</span><span class="font-montez text-xs text-secondary leading-tight">$25</span></button><button class="cal-day-cell flex flex-col items-center justify-center p-1 rounded-lg hover:bg-surface-container-high transition-colors active:scale-95 cursor-pointer" onclick="selectCalendarDay('Oct 15', '$58.00', 'Produce Basket &amp; Bread')" type="button"><span class="font-montez text-base text-primary">15</span><span class="font-montez text-xs text-secondary leading-tight">$58</span></button><button class="cal-day-cell flex flex-col items-center justify-center p-1 rounded-lg hover:bg-surface-container-high transition-colors active:scale-95 cursor-pointer" onclick="selectCalendarDay('Oct 16', '$47.00', 'Household Supplies')" type="button"><span class="font-montez text-base text-primary">16</span><span class="font-montez text-xs text-secondary leading-tight">$47</span></button><button class="cal-day-cell flex flex-col items-center justify-center p-1 rounded-lg hover:bg-surface-container-high transition-colors active:scale-95 cursor-pointer" onclick="selectCalendarDay('Oct 17', '$19.00', 'Espresso &amp; Pastry')" type="button"><span class="font-montez text-base text-primary">17</span><span class="font-montez text-xs text-secondary leading-tight">$19</span></button><button class="cal-day-cell flex flex-col items-center justify-center p-1 rounded-lg hover:bg-surface-container-high transition-colors active:scale-95 cursor-pointer" onclick="selectCalendarDay('Oct 18', '$120.00', 'Index Micro-SIP Deposit')" type="button"><span class="font-montez text-base text-primary font-bold">18</span><span class="font-montez text-xs text-primary font-bold leading-tight">$120</span></button><button class="cal-day-cell flex flex-col items-center justify-center p-1 rounded-lg hover:bg-surface-container-high transition-colors active:scale-95 cursor-pointer" onclick="selectCalendarDay('Oct 19', '$68.00', 'Concert &amp; Street Bites')" type="button"><span class="font-montez text-base text-primary">19</span><span class="font-montez text-xs text-secondary leading-tight">$68</span></button><button class="cal-day-cell flex flex-col items-center justify-center p-1 rounded-lg hover:bg-surface-container-high transition-colors active:scale-95 cursor-pointer" onclick="selectCalendarDay('Oct 20', '$45.00', 'Vinyl Records &amp; Thrift')" type="button"><span class="font-montez text-base text-primary">20</span><span class="font-montez text-xs text-secondary leading-tight">$45</span></button><button class="cal-day-cell flex flex-col items-center justify-center p-1 rounded-lg hover:bg-surface-container-high transition-colors active:scale-95 cursor-pointer" onclick="selectCalendarDay('Oct 21', '$35.00', 'Corner Pharmacy')" type="button"><span class="font-montez text-base text-primary">21</span><span class="font-montez text-xs text-secondary leading-tight">$35</span></button><button class="cal-day-cell flex flex-col items-center justify-center p-1 rounded-lg hover:bg-surface-container-high transition-colors active:scale-95 cursor-pointer" onclick="selectCalendarDay('Oct 22', '$52.00', 'Weekly Pantry Staples')" type="button"><span class="font-montez text-base text-primary">22</span><span class="font-montez text-xs text-secondary leading-tight">$52</span></button><button class="cal-day-cell flex flex-col items-center justify-center p-1 rounded-lg hover:bg-surface-container-high transition-colors active:scale-95 cursor-pointer" onclick="selectCalendarDay('Oct 23', '$21.00', 'Art Paper &amp; Ink')" type="button"><span class="font-montez text-base text-primary">23</span><span class="font-montez text-xs text-secondary leading-tight">$21</span></button><button class="cal-day-cell flex flex-col items-center justify-center p-1 rounded-lg hover:bg-surface-container-high transition-colors active:scale-95 cursor-pointer" onclick="selectCalendarDay('Oct 24', '$110.00', 'Electric &amp; Energy Bill')" type="button"><span class="font-montez text-base text-primary font-bold">24</span><span class="font-montez text-xs text-primary font-bold leading-tight">$110</span></button><button class="cal-day-cell flex flex-col items-center justify-center p-1 rounded-lg hover:bg-surface-container-high transition-colors active:scale-95 cursor-pointer" onclick="selectCalendarDay('Oct 25', '$150.00', 'Auto-Sweep Rainy Day Fund')" type="button"><span class="font-montez text-base text-primary font-bold">25</span><span class="font-montez text-xs text-primary font-bold leading-tight">$150</span></button><button class="cal-day-cell bg-primary text-on-primary flex flex-col items-center justify-center p-1 rounded-lg shadow-xs active:scale-95 cursor-pointer ring-2 ring-black ring-offset-1" onclick="selectCalendarDay('Oct 26 (Today)', '$42.00', 'Farmers Market &amp; Lunch')" type="button"><span class="font-montez text-base text-white font-bold">26</span><span class="font-montez text-xs text-white leading-tight">$42</span></button></div></section>
+<!-- Quick Action Button (Toggles Spend Calendar) -->
+<div class="flex flex-col items-center w-full pt-1 pb-6">
+<button class="w-full py-3.5 px-4 rounded-xl font-montez text-xl font-normal flex items-center justify-center gap-2 active:scale-98 transition-transform cursor-pointer bg-white text-primary border-2 border-black shadow-sm" id="toggle-spend-cal-btn" onclick="toggleSpendCalendar()" type="button">
+<span class="material-symbols-outlined text-[16px] text-primary" id="toggle-cal-icon">calendar_today</span>
+<span id="toggle-cal-label" class="font-montez text-xl text-primary">Spend Calendar</span>
+</button>
+<p class="font-montez text-sm text-secondary/70 text-center mt-3">
+        Change mindful micro balance • Refreshed hourly
+      </p>
+</div>
+</div>
+</main>
+<!-- ==============================================
+       4. CATEGORY TRANSACTIONS MODAL / DOODLE SHEET
+       ============================================== -->
+<div class="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs flex items-end justify-center transition-opacity duration-300 pointer-events-none opacity-0" id="tx-modal" onclick="handleModalBackdropClick(event)">
+<div class="w-full max-w-md bg-white rounded-t-3xl p-5 shadow-2xl border-t-2 border-black flex flex-col max-h-[85vh] overflow-y-auto" onclick="event.stopPropagation()">
+<div class="w-12 h-1 bg-black/20 rounded-full mx-auto mb-3"></div>
+<div class="flex items-center justify-between pb-3 border-b border-black/10">
+<div class="flex items-center gap-2.5">
+<div class="w-9 h-9 rounded-full border border-black flex items-center justify-center text-lg" id="modal-category-icon">🛒</div>
+<div class="flex flex-col">
+<h3 class="font-montez text-2xl text-primary leading-tight" id="modal-title">Category Breakdown</h3>
+<span class="font-mono text-[10px] text-secondary" id="modal-budget-summary">$888.00 of $1,000 spent</span>
+</div>
+</div>
+<button aria-label="Close" class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-primary text-sm hover:bg-surface-container-high transition-colors cursor-pointer" onclick="closeTransactionsModal()">✕</button>
+</div>
+<div class="flex flex-col gap-2.5 py-4" id="modal-tx-list">
+<!-- Dynamically populated -->
+</div>
+<button class="w-full py-2.5 rounded-full bg-primary text-white font-space text-xs font-semibold cursor-pointer active:scale-95 transition-all mt-1" onclick="closeTransactionsModal()">Done</button>
+</div>
+</div>
+<!-- ==============================================
+       5. MONTH PICKER MODAL
+       ============================================== -->
+<div class="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs flex items-end sm:items-center justify-center transition-opacity duration-300 pointer-events-none opacity-0" id="month-picker-modal" onclick="closeMonthPickerModal()">
+<div class="w-full max-w-sm bg-white rounded-3xl p-5 shadow-2xl border-2 border-black mx-4 mb-4 flex flex-col gap-3" onclick="event.stopPropagation()">
+<div class="flex items-center justify-between pb-2 border-b border-black/10">
+<span class="font-montez text-2xl text-primary">Select Period</span>
+<button class="w-7 h-7 rounded-full bg-surface-container flex items-center justify-center text-primary cursor-pointer" onclick="closeMonthPickerModal()">✕</button>
+</div>
+<div class="flex flex-col gap-2 py-1">
+<button class="p-3 rounded-xl border border-black/15 bg-surface-container-low hover:bg-surface-container active:scale-98 transition-all flex items-center justify-between cursor-pointer" onclick="selectMonthOption('Oct 2024', '$2,450.00', '$1,850.00', '$4,800.00', 'Day 26 of 31 • Oct')">
+<div class="flex flex-col text-left">
+<span class="font-montez text-2xl text-primary">October 2024</span>
+<span class="font-mono text-xs text-secondary">Active • 26 days spent</span>
+</div>
+<span class="font-montez text-2xl text-primary font-bold">$2,450 rem</span>
+</button>
+<button class="p-3 rounded-xl border border-black/10 hover:bg-surface-container-low active:scale-98 transition-all flex items-center justify-between cursor-pointer" onclick="selectMonthOption('Sep 2024', '$3,120.00', '$1,680.00', '$4,800.00', 'Closed • 30 days')">
+<div class="flex flex-col text-left">
+<span class="font-montez text-2xl text-primary">September 2024</span>
+<span class="font-mono text-xs text-secondary">Completed • $3,120 left</span>
+</div>
+<span class="font-montez text-2xl text-secondary">$3,120 rem</span>
+</button>
+<button class="p-3 rounded-xl border border-black/10 hover:bg-surface-container-low active:scale-98 transition-all flex items-center justify-between cursor-pointer" onclick="selectMonthOption('Aug 2024', '$2,890.00', '$1,910.00', '$4,800.00', 'Closed • 31 days')">
+<div class="flex flex-col text-left">
+<span class="font-montez text-2xl text-primary">August 2024</span>
+<span class="font-mono text-xs text-secondary">Completed • $2,890 left</span>
+</div>
+<span class="font-montez text-secondary text-2xl">$2,890 rem</span>
+</button>
+</div>
+</div>
+</div>
+<!-- ==============================================
+       6. BOTTOM HOME INDICATOR BAR
+       ============================================== -->
+<footer class="fixed bottom-0 left-0 right-0 z-40 bg-surface/90 backdrop-blur-md pointer-events-none pb-2 pt-1">
+<div class="w-32 h-1 bg-black/40 rounded-full mx-auto"></div>
+</footer>
+<!-- ==============================================
+       7. INTERACTION & ANIMATION SCRIPT
+       ============================================== -->
+<script>
+    let introTimer = null;
+    let isListening = false;
+    let selectedCategoryKey = null; // ZERO portions clicked on startup
+    let isMenuOpen = false;
+    let isAnalyticsFilterOpen = false;
+    let isCalendarViewOpen = false;
+    let currentSlide = 0;
+
+    // Header Dropdown Menu Controls
+    function toggleHeaderMenu(event) {
+      if (event) {
+        event.stopPropagation();
+      }
+      isMenuOpen = !isMenuOpen;
+      const dropdown = document.getElementById('header-menu-dropdown');
+      const menuBtn = document.getElementById('header-menu-btn');
+      const menuIcon = document.getElementById('header-menu-icon');
+
+      if (!dropdown) return;
+
+      if (isMenuOpen) {
+        dropdown.classList.remove('opacity-0', 'scale-95', 'pointer-events-none', '-translate-y-1');
+        dropdown.classList.add('opacity-100', 'scale-100', 'translate-y-0');
+        menuBtn?.setAttribute('aria-expanded', 'true');
+        menuBtn?.classList.add('bg-surface-container');
+        if (menuIcon) menuIcon.textContent = 'close';
+      } else {
+        closeHeaderMenu();
+      }
+    }
+
+    function closeHeaderMenu() {
+      isMenuOpen = false;
+      const dropdown = document.getElementById('header-menu-dropdown');
+      const menuBtn = document.getElementById('header-menu-btn');
+      const menuIcon = document.getElementById('header-menu-icon');
+      if (dropdown) {
+        dropdown.classList.remove('opacity-100', 'scale-100', 'translate-y-0');
+        dropdown.classList.add('opacity-0', 'scale-95', 'pointer-events-none', '-translate-y-1');
+      }
+      menuBtn?.setAttribute('aria-expanded', 'false');
+      menuBtn?.classList.remove('bg-surface-container');
+      if (menuIcon) menuIcon.textContent = 'menu';
+    }
+
+    function handleMenuOption(action, event) {
+      if (event) event.stopPropagation();
+      closeHeaderMenu();
+      if (action === 'add-budget') {
+        alert('Set new monthly budget target ($4,800.00 current)');
+      } else if (action === 'settings') {
+        openTransactionsModal('all');
+      }
+    }
+
+    // Analytics Filter Menu
+    function toggleAnalyticsFilterMenu(event) {
+      if (event) event.stopPropagation();
+      isAnalyticsFilterOpen = !isAnalyticsFilterOpen;
+      const dropdown = document.getElementById('analytics-filter-dropdown');
+      if (!dropdown) return;
+      if (isAnalyticsFilterOpen) {
+        dropdown.classList.remove('opacity-0', 'scale-95', 'pointer-events-none', '-translate-y-1');
+        dropdown.classList.add('opacity-100', 'scale-100', 'translate-y-0');
+      } else {
+        closeAnalyticsFilterMenu();
+      }
+    }
+
+    function closeAnalyticsFilterMenu() {
+      isAnalyticsFilterOpen = false;
+      const dropdown = document.getElementById('analytics-filter-dropdown');
+      if (dropdown) {
+        dropdown.classList.remove('opacity-100', 'scale-100', 'translate-y-0');
+        dropdown.classList.add('opacity-0', 'scale-95', 'pointer-events-none', '-translate-y-1');
+      }
+    }
+
+    function setAnalyticsDateScope(scopeLabel) {
+      closeAnalyticsFilterMenu();
+      const pill = document.getElementById('analytics-active-month-label');
+      if (pill) pill.textContent = scopeLabel.includes('Last') ? 'Sep 2024' : 'Oct 2024';
+      alert(`Scope set to: ${scopeLabel}`);
+    }
+
+    function exportAnalyticsReport() {
+      closeAnalyticsFilterMenu();
+      alert('Exporting Oct 2024 mindful financial statement (CSV download ready)');
+    }
+
+    // Global click listener to close dropdowns when clicking outside
+    document.addEventListener('click', function(event) {
+      if (isMenuOpen) {
+        const dropdown = document.getElementById('header-menu-dropdown');
+        const menuBtn = document.getElementById('header-menu-btn');
+        if (!dropdown?.contains(event.target) && !menuBtn?.contains(event.target)) {
+          closeHeaderMenu();
+        }
+      }
+      if (isAnalyticsFilterOpen) {
+        const dropdown = document.getElementById('analytics-filter-dropdown');
+        const btn = document.getElementById('analytics-filter-btn');
+        if (!dropdown?.contains(event.target) && !btn?.contains(event.target)) {
+          closeAnalyticsFilterMenu();
+        }
+      }
+    });
+
+    // Segment data model
+    const categoryData = {
+      essentials: {
+        title: 'Essentials',
+        icon: '🛒',
+        patternDesc: 'Diagonal Hatch',
+        percentage: '48%',
+        burnPct: '88.8%',
+        spent: '$888.00',
+        budget: '$1,000.00',
+        remaining: '$112.00',
+        fillPct: 88.8,
+        knobPos: 247,
+        transactions: [
+          { name: 'Organic Grocery Haul', time: 'Yesterday 5:20 PM', amount: '-$64.20', icon: 'local_grocery_store' },
+          { name: 'Electric & Utility Bill', time: 'Oct 24, 2024', amount: '-$110.00', icon: 'bolt' },
+          { name: 'Corner Pharmacy & Meds', time: 'Oct 21, 2024', amount: '-$24.50', icon: 'medication' },
+          { name: 'Neighborhood Co-op Market', time: 'Oct 19, 2024', amount: '-$48.80', icon: 'storefront' }
+        ]
+      },
+      fun: {
+        title: 'Fun & Life',
+        icon: '☕',
+        patternDesc: 'Dotted Polka',
+        percentage: '32%',
+        burnPct: '84.6%',
+        spent: '$592.00',
+        budget: '$700.00',
+        remaining: '$108.00',
+        fillPct: 84.6,
+        knobPos: 237,
+        transactions: [
+          { name: 'Artisan Roast & Bun', time: 'Today 09:42 AM', amount: '-$6.50', icon: 'local_cafe' },
+          { name: 'Weekend Movie Tickets', time: 'Saturday 7:30 PM', amount: '-$32.00', icon: 'movie' },
+          { name: 'Boutique Bookstore', time: 'Oct 23, 2024', amount: '-$21.40', icon: 'auto_stories' },
+          { name: 'Vinyl Records & Thrift', time: 'Oct 20, 2024', amount: '-$45.00', icon: 'album' }
+        ]
+      },
+      savings: {
+        title: 'Savings',
+        icon: '₹',
+        patternDesc: 'Rupee / Speckle',
+        percentage: '20%',
+        burnPct: '74.0%',
+        spent: '$370.00',
+        budget: '$500.00',
+        remaining: '$130.00',
+        fillPct: 74.0,
+        knobPos: 206,
+        transactions: [
+          { name: 'Auto-Sweep Rainy Day Fund', time: 'Oct 25, 2024', amount: '+$150.00', icon: 'savings' },
+          { name: 'Index Micro-SIP Deposit', time: 'Oct 18, 2024', amount: '+$120.00', icon: 'trending_up' },
+          { name: 'Goal: Travel Stash', time: 'Oct 12, 2024', amount: '+$100.00', icon: 'flight_takeoff' }
+        ]
+      }
+    };
+
+    function selectCategory(catKey, event) {
+      if (event) event.stopPropagation();
+      const wheel = document.getElementById('pie-wheel-svg');
+      const detailCard = document.getElementById('segment-detail-card');
+      const data = categoryData[catKey];
+      if (!data) return;
+
+      // If already active and detail card is currently visible, toggle off
+      if (selectedCategoryKey === catKey && detailCard && !detailCard.classList.contains('hidden')) {
+        clearCategorySelection(event);
+        return;
+      }
+
+      selectedCategoryKey = catKey;
+
+      // Pause rotation wheel while viewing segment
+      if (wheel) wheel.classList.add('pie-paused');
+
+      // Reset slice highlighting classes
+      document.getElementById('slice-essentials')?.classList.remove('slice-selected-essentials');
+      document.getElementById('slice-fun')?.classList.remove('slice-selected-fun');
+      document.getElementById('slice-savings')?.classList.remove('slice-selected-savings');
+
+      // Reset pill styles
+      ['essentials', 'fun', 'savings'].forEach(k => {
+        const p = document.getElementById('pill-' + k);
+        if (p) {
+          p.classList.remove('ring-2', 'ring-black', 'bg-surface-container-high');
+        }
+      });
+
+      // Apply specific slice transform
+      if (catKey === 'essentials') {
+        document.getElementById('slice-essentials')?.classList.add('slice-selected-essentials');
+      } else if (catKey === 'fun') {
+        document.getElementById('slice-fun')?.classList.add('slice-selected-fun');
+      } else if (catKey === 'savings') {
+        document.getElementById('slice-savings')?.classList.add('slice-selected-savings');
+      }
+
+      // Highlight corresponding bottom pill
+      const activePill = document.getElementById('pill-' + catKey);
+      if (activePill) {
+        activePill.classList.add('ring-2', 'ring-black', 'bg-surface-container-high');
+      }
+
+      // Update center donut readout
+      const centerTitle = document.getElementById('center-title');
+      const centerStat = document.getElementById('center-stat');
+      const centerSubtitle = document.getElementById('center-subtitle');
+      if (centerTitle) centerTitle.textContent = data.title;
+      if (centerStat) centerStat.textContent = data.percentage;
+      if (centerSubtitle) centerSubtitle.textContent = data.spent;
+
+      // Populate & open detail card drawer
+      const badgeIcon = document.getElementById('detail-badge-icon');
+      if (badgeIcon) badgeIcon.textContent = data.icon;
+      const detailTitle = document.getElementById('detail-title');
+      if (detailTitle) detailTitle.textContent = data.title;
+      const detailSub = document.getElementById('detail-subtitle');
+      if (detailSub) detailSub.textContent = `${data.percentage} of outflow • Burn ${data.burnPct}`;
+      const detailSpent = document.getElementById('detail-spent');
+      if (detailSpent) detailSpent.textContent = data.spent;
+      const detailBudget = document.getElementById('detail-budget');
+      if (detailBudget) detailBudget.textContent = data.budget;
+      const detailRem = document.getElementById('detail-remaining');
+      if (detailRem) detailRem.textContent = data.remaining;
+
+      // Update progress bar
+      const progressFill = document.getElementById('detail-progress-fill');
+      if (progressFill) {
+        const offset = 100 - data.fillPct;
+        progressFill.style.strokeDashoffset = offset;
+      }
+      const wiggleKnob = document.getElementById('detail-wiggle-knob');
+      if (wiggleKnob && data.knobPos) {
+        wiggleKnob.setAttribute('cx', data.knobPos);
+      }
+
+      if (detailCard) {
+        detailCard.classList.remove('hidden');
+        detailCard.style.display = 'flex';
+      }
+    }
+
+    function clearCategorySelection(event) {
+      if (event) event.stopPropagation();
+      selectedCategoryKey = null;
+      const wheel = document.getElementById('pie-wheel-svg');
+      if (wheel) wheel.classList.remove('pie-paused');
+
+      document.getElementById('slice-essentials')?.classList.remove('slice-selected-essentials');
+      document.getElementById('slice-fun')?.classList.remove('slice-selected-fun');
+      document.getElementById('slice-savings')?.classList.remove('slice-selected-savings');
+
+      ['essentials', 'fun', 'savings'].forEach(k => {
+        const p = document.getElementById('pill-' + k);
+        if (p) p.classList.remove('ring-2', 'ring-black', 'bg-surface-container-high');
+      });
+
+      // Restore center stats to initial overview
+      const centerTitle = document.getElementById('center-title');
+      const centerStat = document.getElementById('center-stat');
+      const centerSubtitle = document.getElementById('center-subtitle');
+      if (centerTitle) centerTitle.textContent = 'Burn Rate';
+      if (centerStat) centerStat.textContent = '57%';
+      if (centerSubtitle) centerSubtitle.textContent = 'On Track';
+
+      // Hide detail drawer
+      const detailCard = document.getElementById('segment-detail-card');
+      if (detailCard) {
+        detailCard.classList.add('hidden');
+        detailCard.style.display = 'none';
+      }
+    }
+
+    function inspectExpenseItem(title, cost, subtitle) {
+      alert(`${title}\nAmount: -${cost}\n${subtitle}`);
+    }
+
+    function openTransactionsModal(specificKey) {
+      const key = (specificKey && categoryData[specificKey]) ? specificKey : (selectedCategoryKey || 'essentials');
+      const data = categoryData[key] || categoryData.essentials;
+      const modal = document.getElementById('tx-modal');
+      const modalList = document.getElementById('modal-tx-list');
+      const modalTitle = document.getElementById('modal-title');
+      const modalIcon = document.getElementById('modal-category-icon');
+      const modalSummary = document.getElementById('modal-budget-summary');
+
+      modalTitle.textContent = data.title + ' Breakdown';
+      modalIcon.textContent = data.icon;
+      modalSummary.textContent = `${data.spent} used of ${data.budget} (${data.remaining} left)`;
+
+      // Render transactions
+      modalList.innerHTML = data.transactions.map(item => `
+        <div class="flex items-center justify-between p-2 rounded-xl bg-surface-container-low border border-black/10">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-primary">
+              <span class="material-symbols-outlined text-[17px]">${item.icon}</span>
+            </div>
+            <div class="flex flex-col">
+              <span class="font-space text-xs font-semibold text-primary">${item.name}</span>
+              <span class="font-mono text-[10px] text-secondary">${item.time}</span>
+            </div>
+          </div>
+          <span class="font-montez text-xl text-primary font-normal">${item.amount}</span>
+        </div>
+      `).join('');
+
+      modal.classList.remove('pointer-events-none', 'opacity-0');
+      modal.classList.add('opacity-100');
+    }
+
+    function closeTransactionsModal() {
+      const modal = document.getElementById('tx-modal');
+      if (modal) {
+        modal.classList.remove('opacity-100');
+        modal.classList.add('opacity-0', 'pointer-events-none');
+      }
+    }
+
+    function handleModalBackdropClick(e) {
+      if (e.target.id === 'tx-modal') {
+        closeTransactionsModal();
+      }
+    }
+
+    // Month Picker Modal controls
+    function toggleMonthPickerModal() {
+      const m = document.getElementById('month-picker-modal');
+      if (!m) return;
+      m.classList.remove('pointer-events-none', 'opacity-0');
+      m.classList.add('opacity-100');
+    }
+
+    function closeMonthPickerModal() {
+      const m = document.getElementById('month-picker-modal');
+      if (!m) return;
+      m.classList.remove('opacity-100');
+      m.classList.add('opacity-0', 'pointer-events-none');
+    }
+
+    function selectMonthOption(monthStr, remBal, spentStr, capStr, dayStr) {
+      closeMonthPickerModal();
+      document.getElementById('analytics-active-month-label').textContent = monthStr;
+      document.getElementById('analytics-balance-number').textContent = remBal;
+      document.getElementById('metric-spent-val').textContent = spentStr;
+      document.getElementById('metric-cap-val').textContent = capStr;
+      document.getElementById('analytics-day-indicator').textContent = dayStr;
+    }
+
+    function showMetricBreakdown(type) {
+      if (type === 'cap') {
+        alert('Monthly Target Cap: $4,800.00\nPlanned essentials: $1,800.00\nPlanned fun & discretionary: $1,200.00\nPlanned savings: $1,800.00');
+      } else {
+        alert('Spent MTD: $1,850.00 (43% consumed)\nRemaining Safe Cap: $2,450.00');
+      }
+    }
+
+    function toggleBurnRateDetails() {
+      const drawer = document.getElementById('burn-info-drawer');
+      if (drawer) {
+        drawer.classList.toggle('hidden');
+      }
+    }
+
+    // Carousel swipe & button handling
+    function scrollCarousel(direction) {
+      const carousel = document.getElementById('bucket-carousel');
+      if (!carousel) return;
+      const cardWidth = carousel.firstElementChild ? carousel.firstElementChild.offsetWidth + 16 : 280;
+      carousel.scrollBy({ left: direction * cardWidth, behavior: 'smooth' });
+    }
+
+    function goToCarouselSlide(index) {
+      const carousel = document.getElementById('bucket-carousel');
+      if (!carousel) return;
+      const cards = carousel.children;
+      if (cards[index]) {
+        cards[index].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      }
+    }
+
+    function updateCarouselDots() {
+      const carousel = document.getElementById('bucket-carousel');
+      if (!carousel) return;
+      const scrollPos = carousel.scrollLeft;
+      const cardWidth = carousel.firstElementChild ? carousel.firstElementChild.offsetWidth + 16 : 280;
+      const activeIdx = Math.round(scrollPos / cardWidth);
+      [0, 1, 2].forEach(i => {
+        const dot = document.getElementById('dot-' + i);
+        if (dot) {
+          if (i === activeIdx) {
+            dot.className = 'w-4 h-2 rounded-full bg-primary transition-all cursor-pointer';
+          } else {
+            dot.className = 'w-2 h-2 rounded-full bg-primary/30 transition-all cursor-pointer';
+          }
+        }
+      });
+    }
+
+    // Rhythm Chart controls
+    function switchChartPeriod(period) {
+      const weeklyView = document.getElementById('chart-view-weekly');
+      const monthlyView = document.getElementById('chart-view-monthly');
+      const btnWeekly = document.getElementById('tab-btn-weekly');
+      const btnMonthly = document.getElementById('tab-btn-monthly');
+
+      if (period === 'weekly') {
+        weeklyView?.classList.remove('hidden');
+        weeklyView?.classList.add('flex');
+        monthlyView?.classList.add('hidden');
+        monthlyView?.classList.remove('flex');
+
+        btnWeekly?.classList.add('bg-primary', 'text-on-primary');
+        btnWeekly?.classList.remove('text-secondary');
+        btnMonthly?.classList.remove('bg-primary', 'text-on-primary');
+        btnMonthly?.classList.add('text-secondary');
+      } else {
+        monthlyView?.classList.remove('hidden');
+        monthlyView?.classList.add('flex');
+        weeklyView?.classList.add('hidden');
+        weeklyView?.classList.remove('flex');
+
+        btnMonthly?.classList.add('bg-primary', 'text-on-primary');
+        btnMonthly?.classList.remove('text-secondary');
+        btnWeekly?.classList.remove('bg-primary', 'text-on-primary');
+        btnWeekly?.classList.add('text-secondary');
+      }
+    }
+
+    function showChartValue(day, amount, desc) {
+      const label = document.getElementById('chart-tooltip-label');
+      const val = document.getElementById('chart-tooltip-val');
+      if (label) label.textContent = `${day}: ${desc}`;
+      if (val) val.textContent = amount;
+    }
+
+    function showMonthValue(week, amount, desc) {
+      const label = document.getElementById('chart-month-tooltip-label');
+      const val = document.getElementById('chart-month-tooltip-val');
+      if (label) label.textContent = `${week}: ${desc}`;
+      if (val) val.textContent = amount;
+    }
+
+    // Spend Calendar toggle & selection
+    function toggleSpendCalendar() {
+      const cal = document.getElementById('section-spend-calendar');
+      const btn = document.getElementById('toggle-spend-cal-btn');
+      const btnIcon = document.getElementById('toggle-cal-icon');
+      const btnLabel = document.getElementById('toggle-cal-label');
+
+      isCalendarViewOpen = !isCalendarViewOpen;
+
+      if (isCalendarViewOpen) {
+        cal?.classList.remove('hidden');
+        cal?.classList.add('flex');
+        if (btnIcon) btnIcon.textContent = 'expand_less';
+        if (btnLabel) btnLabel.textContent = 'Hide Spend Calendar';
+        cal?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      } else {
+        cal?.classList.add('hidden');
+        cal?.classList.remove('flex');
+        if (btnIcon) btnIcon.textContent = 'calendar_month';
+        if (btnLabel) btnLabel.textContent = 'Spend Calendar';
+      }
+    }
+
+    function selectCalendarDay(dayName, amount, desc) {
+      const label = document.getElementById('cal-selected-label');
+      const val = document.getElementById('cal-selected-amount');
+      if (label) label.textContent = `${dayName} • ${desc}`;
+      if (val) val.textContent = amount;
+    }
+
+    // Intro sequence: Runs automatically on every initial load
+    function startIntro() {
+      if (introTimer) clearTimeout(introTimer);
+      const overlay = document.getElementById('intro-overlay');
+      const logo = document.querySelector('#intro-logo-box img');
+      const rings = document.getElementById('intro-rings');
+      const orbit = document.getElementById('intro-orbit');
+
+      if (overlay) {
+        overlay.style.display = 'flex';
+        overlay.style.pointerEvents = 'auto';
+        overlay.style.opacity = '1';
+      }
+
+      // Reset animation classes for fresh playback
+      if (logo) {
+        logo.classList.remove('intro-logo-anim');
+        void logo.offsetWidth;
+        logo.classList.add('intro-logo-anim');
+      }
+      if (rings) {
+        rings.classList.remove('fade-in-delayed-rings');
+        void rings.offsetWidth;
+        rings.classList.add('fade-in-delayed-rings');
+      }
+      if (orbit) {
+        orbit.classList.remove('fade-in-delayed-icons');
+        void orbit.offsetWidth;
+        orbit.classList.add('fade-in-delayed-icons');
+      }
+
+      // Automatically transitions to reveal dashboard cleanly after intro duration (~3.2s)
+      introTimer = setTimeout(() => {
+        skipIntro();
+      }, 3400);
+    }
+
+    function skipIntro() {
+      if (introTimer) clearTimeout(introTimer);
+      const overlay = document.getElementById('intro-overlay');
+      if (overlay) {
+        overlay.style.opacity = '0';
+        overlay.style.pointerEvents = 'none';
+        setTimeout(() => {
+          overlay.style.display = 'none';
+        }, 700);
+      }
+    }
+
+    function replayIntro() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      startIntro();
+    }
+
+    // Voice trigger function
+    function toggleVoiceLogging() {
+      const aura = document.getElementById('gemini-aura');
+      const statusText = document.getElementById('voice-status-text');
+      const subText = document.getElementById('voice-sub-text');
+      const mic = document.getElementById('mic-icon');
+      const btn = document.getElementById('voice-btn');
+      
+      isListening = !isListening;
+
+      if (isListening) {
+        aura?.classList.remove('opacity-0', 'scale-90');
+        aura?.classList.add('opacity-100', 'scale-105', 'gemini-aura-active');
+        btn?.classList.add('listening');
+        if (mic) mic.textContent = 'graphic_eq';
+        if (statusText) statusText.textContent = 'Listening... "Spent $20 on coffee"';
+        if (subText) subText.textContent = 'Listening... tap to cancel';
+      } else {
+        aura?.classList.remove('opacity-100', 'scale-105', 'gemini-aura-active');
+        aura?.classList.add('opacity-0', 'scale-90');
+        btn?.classList.remove('listening');
+        if (mic) mic.textContent = 'mic';
+        if (statusText) statusText.textContent = 'Tap or say "Spent 20 on coffee"';
+        if (subText) subText.textContent = 'Gemini Instant Expense Capture';
+      }
+    }
+
+    // ALWAYS trigger intro on screen load
+    window.addEventListener('DOMContentLoaded', () => {
+      startIntro();
+    });
+  </script>
+<script id="screen-router-script">
+  function showAnalyticsScreen() {
+    const dash = document.getElementById('view-dashboard');
+    const analytics = document.getElementById('view-analytics');
+    if (dash) dash.classList.add('hidden');
+    if (analytics) {
+      analytics.classList.remove('hidden');
+      analytics.classList.add('flex');
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function showDashboardScreen() {
+    const dash = document.getElementById('view-dashboard');
+    const analytics = document.getElementById('view-analytics');
+    if (analytics) {
+      analytics.classList.add('hidden');
+      analytics.classList.remove('flex');
+    }
+    if (dash) {
+      dash.classList.remove('hidden');
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+</body></html>

@@ -1,0 +1,6 @@
+{
+  "name": "Change - Mindful Micro Finance",
+  "description": "Mindful micro-finance app featuring raw ink doodle aesthetic, interactive rotary budget dials, live expense rhythm charts, and Gemini instant expense capture.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

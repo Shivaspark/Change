@@ -1,0 +1,213 @@
+@import "tailwindcss";
+
+@layer utilities {
+  .font-montez {
+    font-family: 'Montez', cursive;
+  }
+  .font-hand {
+    font-family: 'Patrick Hand', cursive;
+  }
+  .font-caveat {
+    font-family: 'Caveat', cursive;
+  }
+  .font-space {
+    font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+  .font-bricolage {
+    font-family: 'Bricolage Grotesque', sans-serif;
+  }
+  .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+/* Material Symbols */
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined' !important;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom Scrollbar hiding */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Doodle Box & Sketchy Borders */
+.doodle-box {
+  border: 2px solid #141414;
+  border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+  box-shadow: 1.5px 2.5px 0px rgba(20, 20, 20, 0.85);
+  transition: all 0.15s ease-in-out;
+}
+
+.doodle-box-active {
+  border: 2px solid #141414 !important;
+  background-color: #fafafa;
+  box-shadow: 0 0 0 2px #141414, 2px 4px 0px rgba(20, 20, 20, 0.9);
+  transform: translateY(-1px);
+}
+
+.doodle-btn {
+  border: 2px solid #141414;
+  border-radius: 255px 18px 225px 18px/18px 225px 18px 255px;
+  box-shadow: 2px 3px 0px #141414;
+  transition: all 0.1s ease;
+}
+
+.doodle-btn:active {
+  transform: translate(1.5px, 2px);
+  box-shadow: 0.5px 1px 0px #141414;
+}
+
+.sketch-border {
+  border: 2px solid #1a1a1a;
+  border-radius: 9999px;
+  box-shadow: 1px 2px 0px 0px rgba(0, 0, 0, 0.8), -0.5px -0.5px 0px 1px rgba(0, 0, 0, 0.15);
+}
+
+.sketch-card {
+  border: 1.5px solid #1a1a1a;
+  box-shadow: 2px 3px 0px 0px rgba(0, 0, 0, 0.85);
+}
+
+.sketch-dropdown {
+  border: 1.8px solid #18181b;
+  border-radius: 1rem;
+  box-shadow: 3px 4px 0px 0px rgba(0, 0, 0, 0.9), 0 8px 20px rgba(0, 0, 0, 0.06);
+}
+
+/* Intro Animations */
+@keyframes logoZoomOutIntro {
+  0% { transform: scale(1.4); opacity: 0; }
+  15% { opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.intro-logo-anim {
+  animation: logoZoomOutIntro 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes pulseRing1 {
+  0% { transform: scale(0.75); opacity: 0.8; }
+  50% { opacity: 0.4; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+@keyframes pulseRing2 {
+  0% { transform: scale(0.75); opacity: 0.65; }
+  50% { opacity: 0.3; }
+  100% { transform: scale(1.9); opacity: 0; }
+}
+@keyframes pulseRing3 {
+  0% { transform: scale(0.75); opacity: 0.5; }
+  50% { opacity: 0.2; }
+  100% { transform: scale(2.3); opacity: 0; }
+}
+
+.ring-pulse-1 {
+  animation: pulseRing1 2.8s cubic-bezier(0.2, 0.6, 0.35, 1) infinite;
+}
+.ring-pulse-2 {
+  animation: pulseRing2 2.8s cubic-bezier(0.2, 0.6, 0.35, 1) 0.7s infinite;
+}
+.ring-pulse-3 {
+  animation: pulseRing3 2.8s cubic-bezier(0.2, 0.6, 0.35, 1) 1.4s infinite;
+}
+
+@keyframes floatOrbitTrack {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes counterOrbitTrack {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+@keyframes doodleBob {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-5px) scale(1.06); }
+}
+
+.orbit-track {
+  animation: floatOrbitTrack 24s linear infinite;
+}
+.counter-orbit {
+  animation: counterOrbitTrack 24s linear infinite;
+}
+.bobbing {
+  animation: doodleBob 3.5s ease-in-out infinite;
+}
+
+.pie-rotating {
+  animation: floatOrbitTrack 30s linear infinite;
+  transform-origin: center center;
+}
+.pie-paused {
+  animation-play-state: paused !important;
+}
+
+/* Interactive slice pop-out transforms */
+.slice-interactive {
+  cursor: pointer;
+  pointer-events: auto;
+  transform-origin: 100px 100px;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.25s ease;
+}
+.slice-interactive:hover {
+  filter: drop-shadow(0px 3px 6px rgba(0, 0, 0, 0.22));
+}
+.slice-selected-essentials {
+  transform: translate(6px, -5px) scale(1.06);
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+.slice-selected-fun {
+  transform: translate(0px, 7px) scale(1.06);
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+.slice-selected-savings {
+  transform: translate(-6px, -5px) scale(1.06);
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+.fade-in-delayed-rings {
+  opacity: 0;
+  animation: fadeInSeq 0.6s ease-out 0.85s forwards;
+}
+.fade-in-delayed-icons {
+  opacity: 0;
+  animation: fadeInSeq 0.7s ease-out 1.35s forwards;
+}
+@keyframes fadeInSeq {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes geminiRainbowPulse {
+  0%, 100% { transform: scale(1); opacity: 0.85; filter: blur(14px); }
+  50% { transform: scale(1.18); opacity: 1; filter: blur(18px); }
+}
+.gemini-aura-active {
+  animation: geminiRainbowPulse 2.2s ease-in-out infinite;
+}
+
+/* Hide native number input spinners */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+  -moz-appearance: textfield;
+}

@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+
+<html lang="en" style=""><head></head><body class="bg-stone-200 min-h-screen flex items-center justify-center p-0 sm:p-4 text-ink font-hand antialiased select-none"><svg aria-hidden="true" class="inline-defs-container" style="position:absolute;width:0;height:0;overflow:hidden"></svg>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Change - Set Budget</title>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Font: Montez & Casual Handwriting -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;family=Space+Grotesk:wght@400;500;600;700&amp;family=Montez&amp;display=swap" rel="stylesheet"/><style id="montez-theme-custom">.font-montez{font-family:'Montez',cursive!important;}.sketch-card{border:1.5px solid #1a1a1a;box-shadow:2px 3px 0px 0px rgba(0,0,0,0.85);}.sketch-border{border:2px solid #1a1a1a;border-radius:9999px;box-shadow:1px 2px 0px 0px rgba(0,0,0,0.8);}</style>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&amp;family=Montez&amp;family=Patrick+Hand&amp;display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            montez: ['Montez', 'cursive'],
+            hand: ['Patrick Hand', 'cursive'],
+            caveat: ['Caveat', 'cursive'],
+          },
+          colors: {
+            ink: '#141414',
+            paper: '#ffffff',
+            softgray: '#f5f5f5',
+            linegray: '#dadada'
+          }
+        }
+      }
+    }
+  </script>
+<!-- Styles for Hand-Drawn Doodle Aesthetic -->
+<style data-purpose="doodle-borders">
+    .doodle-box {
+      border: 2px solid #141414;
+      border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+      box-shadow: 1.5px 2.5px 0px rgba(20, 20, 20, 0.85);
+      transition: all 0.15s ease-in-out;
+    }
+
+    .doodle-box-active {
+      border: 2px solid #141414 !important;
+      background-color: #fafafa;
+      box-shadow: 0 0 0 2px #141414, 2px 4px 0px rgba(20, 20, 20, 0.9);
+      transform: translateY(-1px);
+    }
+
+    .doodle-btn {
+      border: 2px solid #141414;
+      border-radius: 255px 18px 225px 18px/18px 225px 18px 255px;
+      box-shadow: 2px 3px 0px #141414;
+      transition: all 0.1s ease;
+    }
+
+    .doodle-btn:active {
+      transform: translate(1.5px, 2px);
+      box-shadow: 0.5px 1px 0px #141414;
+    }
+
+    .doodle-circle {
+      border: 2px solid #141414;
+      border-radius: 50% 48% 52% 49% / 49% 51% 48% 52%;
+    }
+
+    .ink-divider {
+      border-bottom: 1.8px solid #141414;
+      border-radius: 60% 40% 70% 30% / 100% 0% 100% 0%;
+    }
+
+    /* Background hand-drawn pattern watermark */
+    .doodle-bg {
+      background-color: #ffffff;
+      background-image: radial-gradient(#141414 0.65px, transparent 0.65px), radial-gradient(#141414 0.65px, #ffffff 0.65px);
+      background-size: 26px 26px;
+      background-position: 0 0, 13px 13px;
+      background-opacity: 0.05;
+    }
+
+    [contenteditable="true"]:focus {
+      outline: none;
+      background: #f4f4f5;
+      border-radius: 4px;
+      padding-left: 2px;
+      padding-right: 2px;
+    }
+
+    /* Hide native number spinners */
+    input[type=number]::-webkit-inner-spin-button, 
+    input[type=number]::-webkit-outer-spin-button { 
+      -webkit-appearance: none; 
+      margin: 0; 
+    }
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
+  </style>
+<style data-purpose="rotary-dial">
+    #rotaryDialWheel {
+      touch-action: none;
+      user-select: none;
+      -webkit-user-select: none;
+      cursor: grab;
+    }
+    #rotaryDialWheel:active {
+      cursor: grabbing;
+    }
+  </style>
+<!-- Mobile Device Outer Wrapper (iPhone frame simulation) -->
+<main class="w-full max-w-[420px] bg-white sm:rounded-[44px] shadow-2xl relative flex flex-col justify-between border-[6px] border-ink min-h-screen" data-purpose="mobile-viewport"><!-- Background watermark subtle pattern identical to Analytics -->
+<div aria-hidden="true" class="fixed inset-0 pointer-events-none opacity-[0.10] z-0 overflow-hidden">
+<svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<pattern height="48" id="grid-doodle-bg" patternunits="userSpaceOnUse" width="48">
+<circle cx="12" cy="12" fill="#000000" r="1.2"></circle>
+<circle cx="36" cy="36" fill="#000000" r="0.9"></circle>
+<path d="M4 42 Q 14 46, 24 42" fill="none" stroke="#000000" stroke-linecap="round" stroke-width="0.8"></path>
+<path d="M38 8 Q 44 4, 46 12" fill="none" stroke="#000000" stroke-width="0.6"></path>
+<text fill="#000000" font-family="'Montez', cursive" font-size="10" x="32" y="22">$</text>
+</pattern>
+</defs>
+<rect fill="url(#grid-doodle-bg)" height="100%" width="100%"></rect>
+</svg>
+</div>
+<!-- 1. Native Status Bar -->
+<header class="w-full pt-3 px-6 flex justify-between items-center text-xs tracking-wider z-20 bg-white/80 backdrop-blur-sm select-none">
+<span class="font-bold text-[14px] text-ink font-sans">9:41</span>
+<div class="flex items-center gap-1.5 text-ink">
+<span class="material-symbols-outlined text-[16px]">signal_cellular_4_bar</span>
+<span class="material-symbols-outlined text-[16px]">wifi</span>
+<div class="flex items-center gap-0.5 ml-0.5">
+<div class="w-5 h-2.5 border border-ink rounded-sm p-0.5 flex items-center">
+<div class="w-full h-full bg-ink rounded-[1px]"></div>
+</div>
+<div class="w-0.5 h-1 bg-ink rounded-r-xs"></div>
+</div>
+</div>
+</header>
+<!-- 2. Scrollable Body Content -->
+<div class="flex-1 px-4 pt-1 pb-3 z-10 flex flex-col justify-between gap-3" id="mainScrollArea">
+<!-- Top Navigation Header -->
+<header class="flex items-center justify-between pt-1 relative z-40">
+<button aria-label="Go back" class="w-10 h-10 rounded-full bg-stone-50 border border-black/15 flex items-center justify-center text-ink shadow-xs active:scale-95 transition-transform cursor-pointer" onclick="window.history.back()" type="button">
+<span class="material-symbols-outlined text-[20px]">arrow_back</span>
+</button>
+<div class="flex flex-col items-center">
+<h1 class="font-montez text-2xl text-ink font-normal leading-none tracking-wide text-center">Set Monthly Budget</h1>
+</div>
+<!-- Month Selection Component with Interactive Dropdown Popover -->
+<div class="relative" id="monthDropdownContainer">
+<button aria-label="Month selection" class="font-montez text-lg text-neutral-600 px-3 py-1 rounded-full bg-stone-100 hover:bg-stone-200 border border-black/10 active:scale-95 transition-all cursor-pointer flex items-center gap-1 shadow-xs" id="monthChipBtn" onclick="toggleMonthPicker(event)" type="button">
+<span class="material-symbols-outlined text-[14px]">calendar_today</span>
+<span id="selectedMonthLabel">Nov 2024</span>
+<span class="material-symbols-outlined text-[13px] transition-transform duration-200" id="monthDropdownArrow">expand_more</span>
+</button>
+<!-- Interactive Month & Year Dropdown Card -->
+<div class="absolute right-0 top-full mt-2 w-64 bg-white rounded-2xl p-3 border-2 border-black shadow-xl z-50 transition-all duration-200 opacity-0 pointer-events-none transform -translate-y-2 select-none" id="monthPickerDropdown">
+<!-- Year Selector Row -->
+<div class="flex items-center justify-between pb-2 mb-2 border-b border-black/10">
+<button class="w-7 h-7 rounded-full bg-stone-100 hover:bg-stone-200 border border-black/20 flex items-center justify-center text-ink active:scale-90 transition-transform cursor-pointer" onclick="adjustDropdownYear(-1)" title="Previous Year" type="button">
+<span class="material-symbols-outlined text-[16px]">chevron_left</span>
+</button>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px] text-neutral-500">event</span>
+<span class="font-montez text-2xl font-bold text-ink leading-none" id="dropdownYearDisplay">2024</span>
+</div>
+<button class="w-7 h-7 rounded-full bg-stone-100 hover:bg-stone-200 border border-black/20 flex items-center justify-center text-ink active:scale-90 transition-transform cursor-pointer" onclick="adjustDropdownYear(1)" title="Next Year" type="button">
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</div>
+<!-- 12 Months Grid -->
+<div class="grid grid-cols-3 gap-1.5" id="monthGrid">
+<!-- Generated via JS for exact state matching and reactive active highlights -->
+</div>
+<!-- Quick current month pill -->
+<div class="pt-2 mt-2 border-t border-black/10 flex items-center justify-between text-[11px] font-sans text-neutral-500">
+<span>Plan period</span>
+<button class="hover:text-ink font-semibold underline cursor-pointer" onclick="selectCurrentMonthPreset()" type="button">Current (Nov 2024)</button>
+</div>
+</div>
+</div>
+</header>
+<!-- Top Summary Hero Card (Matching Analytics Hero) -->
+<section class="bg-white rounded-2xl p-2.5 shadow-sm border border-black/10 flex flex-col gap-1.5 relative overflow-hidden cursor-pointer transition-all active:scale-[0.99] doodle-box-active" id="totalBudgetCard" onclick="selectTotalTarget()">
+<div class="flex items-center justify-center w-full"><span class="text-[14px] font-montez tracking-normal text-ink bg-stone-100 px-3 py-0.5 rounded-full transition-colors" id="plannedTargetBadge">Planned Target</span></div>
+<div class="flex flex-col items-center justify-center text-center py-0.5">
+<span class="text-[11px] font-sans tracking-wide text-neutral-500 mb-0.5">Total Budget Pool</span>
+<div class="flex items-baseline justify-center gap-0.5 text-ink">
+<span class="font-montez text-4xl font-bold leading-none tracking-tight text-ink" id="heroTotalDisplay">$0.00</span>
+</div>
+<svg class="w-36 h-2 mt-0.5 text-ink" fill="none" preserveaspectratio="none" viewbox="0 0 200 12">
+<path d="M2 6 Q 25 1, 50 6 T 100 6 T 150 6 T 198 6" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+</svg>
+</div>
+</section>
+<!-- 3. Rotary Dial Section with Active Target Header & Direct Typing Option -->
+<section class="bg-white rounded-2xl p-2.5 shadow-sm border border-black/10 flex flex-col items-center justify-center gap-1.5 relative select-none">
+<div class="w-full flex items-center justify-between pb-1.5 border-b border-black/5 px-1">
+<div class="flex flex-col">
+<span class="text-[9px] font-sans uppercase tracking-wider text-neutral-400 font-bold" id="activeDialSubtitle">Dial Tuning Target</span>
+<span class="font-montez text-xl text-ink font-bold leading-tight" id="activeDialCatName">Total Budget Pool</span>
+</div>
+<!-- Direct typing interactive container -->
+<div class="flex items-center gap-1 bg-stone-50 hover:bg-stone-100 border border-black/15 rounded-xl px-2 py-1 transition-all focus-within:ring-2 focus-within:ring-black focus-within:bg-white cursor-text" onclick="focusDirectInput()" title="Tap to type budget amount">
+<span class="font-montez text-2xl text-ink font-bold leading-none select-none">$</span>
+<input class="font-montez text-2xl text-ink font-bold w-20 bg-transparent border-none p-0 focus:outline-none focus:ring-0 leading-none text-right placeholder-neutral-300" id="directAmountInput" inputmode="decimal" max="99999" min="0" onblur="handleDirectInputBlur(this)" onfocus="handleDirectInputFocus(this)" oninput="handleDirectAmountChange(this.value)" placeholder="0.00" step="any" type="number" value="0.00"/>
+<span class="material-symbols-outlined text-[15px] text-neutral-400 ml-0.5 pointer-events-none">edit</span>
+</div>
+</div>
+<!-- Concentric 200x200 Dial Frame with matching knob circle radius -->
+<div class="relative w-[200px] h-[200px] flex items-center justify-center my-0.5" id="dialWrapper">
+<svg class="absolute inset-0 w-[200px] h-[200px] pointer-events-none" viewbox="0 0 200 200">
+<circle cx="100" cy="100" fill="none" r="90" stroke="#141414" stroke-dasharray="1 5" stroke-linecap="round" stroke-width="2"></circle>
+<!-- Dot Circle Track (radius 78px) -->
+<circle cx="100" cy="100" fill="none" r="78" stroke="#141414" stroke-width="1.2"></circle>
+<g fill="#141414">
+<circle cx="100" cy="22" r="2.5"></circle>
+<circle cx="124" cy="26" r="2"></circle>
+<circle cx="146" cy="36" r="2"></circle>
+<circle cx="163" cy="51" r="2"></circle>
+<circle cx="173" cy="71" r="2"></circle>
+<circle cx="178" cy="100" r="2.5"></circle>
+<circle cx="173" cy="129" r="2"></circle>
+<circle cx="163" cy="149" r="2"></circle>
+<circle cx="146" cy="164" r="2"></circle>
+<circle cx="124" cy="174" r="2"></circle>
+<circle cx="100" cy="178" r="2.5"></circle>
+<circle cx="76" cy="174" r="2"></circle>
+<circle cx="54" cy="164" r="2"></circle>
+<circle cx="37" cy="149" r="2"></circle>
+<circle cx="27" cy="129" r="2"></circle>
+<circle cx="22" cy="100" r="2.5"></circle>
+<circle cx="27" cy="71" r="2"></circle>
+<circle cx="37" cy="51" r="2"></circle>
+<circle cx="54" cy="36" r="2"></circle>
+<circle cx="76" cy="26" r="2"></circle>
+</g>
+<circle cx="100" cy="100" fill="none" r="58" stroke="#141414" stroke-dasharray="3 3" stroke-width="1.5"></circle>
+</svg>
+<!-- Rotary Dial Interactive Surface -->
+<div class="absolute w-[200px] h-[200px] rounded-full flex items-center justify-center touch-none cursor-grab active:cursor-grabbing z-10" id="rotaryDialWheel">
+<!-- Thumb Knob placed at center with transform rotate & translate aligned to r=78px concentric track -->
+<div class="absolute w-5 h-5 bg-ink rounded-full border-2 border-white shadow-md flex items-center justify-center pointer-events-none transition-transform" id="dialIndicatorKnob" style="top: calc(50% - 10px); left: calc(50% - 10px); transform: rotate(0deg) translateY(-78px);">
+<span class="w-1.5 h-1.5 bg-white rounded-full"></span>
+</div>
+<div class="w-24 h-24 rounded-full bg-stone-50 border-2 border-black/20 flex flex-col items-center justify-center shadow-inner relative z-10 pointer-events-auto">
+<button class="w-9 h-9 rounded-full bg-white border-2 border-ink flex items-center justify-center text-ink hover:bg-stone-100 active:scale-90 transition-transform shadow-sm cursor-pointer" id="dialCenterPlus" onclick="handleAddNewCategoryDirectly(event)" title="Add Category" type="button">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+<span class="font-montez text-xs text-neutral-600 mt-0.5 leading-none">Add Category</span>
+</div>
+</div>
+</div>
+<div class="w-full flex items-center justify-center gap-1.5 pt-0.5 border-t border-black/5">
+<button class="px-2.5 py-0.5 rounded-full bg-stone-100 hover:bg-stone-200 border border-black/10 text-[10px] font-mono font-semibold text-ink active:scale-95 transition-all cursor-pointer" onclick="stepActiveValue(-100)" type="button">-$100</button>
+<button class="px-2.5 py-0.5 rounded-full bg-stone-100 hover:bg-stone-200 border border-black/10 text-[10px] font-mono font-semibold text-ink active:scale-95 transition-all cursor-pointer" onclick="stepActiveValue(-50)" type="button">-$50</button>
+<button class="px-2.5 py-0.5 rounded-full bg-stone-100 hover:bg-stone-200 border border-black/10 text-[10px] font-mono font-semibold text-ink active:scale-95 transition-all cursor-pointer" onclick="stepActiveValue(50)" type="button">+$50</button>
+<button class="px-2.5 py-0.5 rounded-full bg-stone-100 hover:bg-stone-200 border border-black/10 text-[10px] font-mono font-semibold text-ink active:scale-95 transition-all cursor-pointer" onclick="stepActiveValue(100)" type="button">+$100</button>
+</div>
+</section>
+<!-- 4. Portion Allocation Horizontal Cards / Selectors -->
+<section class="flex flex-col gap-1.5">
+<div class="flex items-center justify-between px-1">
+<div class="flex items-center gap-1.5">
+<span class="font-montez text-2xl text-ink">Portion Allocation</span>
+<span class="text-[10px] font-sans uppercase tracking-wider bg-stone-100 text-neutral-600 px-2 py-0.5 rounded-full font-semibold" id="bucketCountBadge">3 buckets</span>
+</div>
+<button class="flex items-center gap-1 text-ink text-xs font-semibold hover:opacity-80 active:scale-95 transition-all cursor-pointer" onclick="handleAddNewCategoryDirectly(event)" type="button">
+<span class="material-symbols-outlined text-[16px]">add_circle</span>
+<span class="font-sans text-[11px]">Add Category</span>
+</button>
+</div>
+<!-- Categories Horizontal Scroll Track -->
+<div class="flex gap-3 overflow-x-auto pb-2 pt-0.5 px-0.5 snap-x snap-mandatory scroll-smooth" id="categoryTrack" style="scrollbar-width: none;"><article class="cat-item-card min-w-[78%] snap-center shrink-0 bg-white rounded-2xl p-3.5 border shadow-xs flex flex-col justify-between gap-2.5 cursor-pointer transition-all border-black/15 opacity-90 hover:opacity-100 hover:border-black/40" data-cat-id="cat_essentials">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-2">
+<div class="w-9 h-9 rounded-xl bg-stone-100 flex items-center justify-center text-ink shrink-0">
+<span class="material-symbols-outlined text-[18px]">local_grocery_store</span>
+</div>
+<div>
+<div class="flex items-center gap-1.5">
+<h3 class="font-montez text-2xl text-ink leading-tight cursor-text category-name-text" title="Tap to rename">Essentials</h3>
+<button class="rename-action text-neutral-400 hover:text-ink active:scale-90 transition-transform p-0.5" onclick="openRenameModal('cat_essentials')" title="Rename Category" type="button">
+<span class="material-symbols-outlined text-[14px]">edit</span>
+</button>
+</div>
+<span class="text-[10px] font-sans text-neutral-500 uppercase tracking-wide block leading-tight">Rent, Groceries, Bills</span>
+</div>
+</div>
+<span class="text-[11px] font-mono px-2 py-0.5 rounded-full font-semibold transition-colors bg-stone-100 text-neutral-600">
+            Tap to Tune
+          </span>
+</div>
+<div class="flex items-baseline justify-between bg-stone-50 rounded-xl p-2 border border-black/5">
+<span class="text-xs font-sans text-neutral-500">Allocated</span>
+<span class="font-montez text-2xl text-ink font-bold">$0.00</span>
+</div>
+</article><article class="cat-item-card min-w-[78%] snap-center shrink-0 bg-white rounded-2xl p-3.5 border shadow-xs flex flex-col justify-between gap-2.5 cursor-pointer transition-all border-black/15 opacity-90 hover:opacity-100 hover:border-black/40" data-cat-id="cat_dining">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-2">
+<div class="w-9 h-9 rounded-xl bg-stone-100 flex items-center justify-center text-ink shrink-0">
+<span class="material-symbols-outlined text-[18px]">restaurant</span>
+</div>
+<div>
+<div class="flex items-center gap-1.5">
+<h3 class="font-montez text-2xl text-ink leading-tight cursor-text category-name-text" title="Tap to rename">Food &amp; Dining</h3>
+<button class="rename-action text-neutral-400 hover:text-ink active:scale-90 transition-transform p-0.5" onclick="openRenameModal('cat_dining')" title="Rename Category" type="button">
+<span class="material-symbols-outlined text-[14px]">edit</span>
+</button>
+</div>
+<span class="text-[10px] font-sans text-neutral-500 uppercase tracking-wide block leading-tight">Dining, Cafes, Outings</span>
+</div>
+</div>
+<span class="text-[11px] font-mono px-2 py-0.5 rounded-full font-semibold transition-colors bg-stone-100 text-neutral-600">
+            Tap to Tune
+          </span>
+</div>
+<div class="flex items-baseline justify-between bg-stone-50 rounded-xl p-2 border border-black/5">
+<span class="text-xs font-sans text-neutral-500">Allocated</span>
+<span class="font-montez text-2xl text-ink font-bold">$0.00</span>
+</div>
+</article><article class="cat-item-card min-w-[78%] snap-center shrink-0 bg-white rounded-2xl p-3.5 border shadow-xs flex flex-col justify-between gap-2.5 cursor-pointer transition-all border-black/15 opacity-90 hover:opacity-100 hover:border-black/40" data-cat-id="cat_savings">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-2">
+<div class="w-9 h-9 rounded-xl bg-stone-100 flex items-center justify-center text-ink shrink-0">
+<span class="material-symbols-outlined text-[18px]">savings</span>
+</div>
+<div>
+<div class="flex items-center gap-1.5">
+<h3 class="font-montez text-2xl text-ink leading-tight cursor-text category-name-text" title="Tap to rename">Savings &amp; Growth</h3>
+<button class="rename-action text-neutral-400 hover:text-ink active:scale-90 transition-transform p-0.5" onclick="openRenameModal('cat_savings')" title="Rename Category" type="button">
+<span class="material-symbols-outlined text-[14px]">edit</span>
+</button>
+</div>
+<span class="text-[10px] font-sans text-neutral-500 uppercase tracking-wide block leading-tight">SIP, Emergency Fund</span>
+</div>
+</div>
+<span class="text-[11px] font-mono px-2 py-0.5 rounded-full font-semibold transition-colors bg-stone-100 text-neutral-600">
+            Tap to Tune
+          </span>
+</div>
+<div class="flex items-baseline justify-between bg-stone-50 rounded-xl p-2 border border-black/5">
+<span class="text-xs font-sans text-neutral-500">Allocated</span>
+<span class="font-montez text-2xl text-ink font-bold">$0.00</span>
+</div>
+</article></div>
+</section>
+<!-- 5. Bottom Main Action Button matching Analytics -->
+<div class="flex flex-col gap-1 pt-1 pb-1">
+<button class="w-full py-2.5 px-4 rounded-xl font-montez text-xl font-bold flex items-center justify-center gap-2 active:scale-98 transition-transform shadow-sm cursor-pointer bg-white text-ink border-2 border-black hover:bg-stone-50" id="btnSaveBudget" onclick="saveBudgetPlan()" type="button">
+<span class="material-symbols-outlined text-[18px]">check_circle</span>
+<span class="">Save Budget Plan</span>
+</button>
+<div class="flex items-center justify-center gap-3 text-[11px] font-sans text-neutral-500 pt-0.5">
+<button class="hover:text-ink cursor-pointer underline" onclick="resetBudgetDefaults()" type="button">Reset Defaults</button>
+<span class="">•</span>
+<button class="hover:text-ink cursor-pointer underline" onclick="shareBudgetSummary()" type="button">Export Summary</button>
+</div>
+</div>
+</div>
+<!-- 6. Category Doodle Modal / Bottom Sheet for Renaming & Configuration -->
+<div class="fixed inset-0 z-50 bg-black/40 backdrop-blur-xs flex items-end sm:items-center justify-center p-3 transition-opacity duration-200 opacity-0 pointer-events-none" id="newCategoryModal" onclick="handleModalOverlayClick(event)">
+<div class="w-full max-w-sm bg-white rounded-2xl p-4 border-2 border-black shadow-xl relative max-h-[85vh] flex flex-col gap-3.5" onclick="event.stopPropagation()">
+<!-- Modal Header -->
+<div class="flex items-center justify-between pb-2 border-b border-black/15">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-stone-100 flex items-center justify-center text-ink text-base border border-black/20">
+<span class="material-symbols-outlined text-[18px]">edit_note</span>
+</div>
+<div>
+<h3 class="font-montez text-2xl text-ink leading-none" id="modalHeaderTitle">Edit Category</h3>
+<span class="text-[10px] font-sans text-neutral-500">Customize portion title</span>
+</div>
+</div>
+<button aria-label="Close modal" class="w-7 h-7 rounded-full bg-stone-100 hover:bg-stone-200 flex items-center justify-center border border-black/20 text-xs text-ink active:scale-95 transition-transform cursor-pointer" onclick="closeCategoryModal()" type="button">✕</button>
+</div>
+<!-- Category Name Input -->
+<div class="flex flex-col gap-1">
+<label class="font-montez text-lg text-ink" for="catNameInput">Category Title</label>
+<input class="w-full px-3 py-2 border-2 border-black rounded-xl font-sans text-sm text-ink focus:outline-none focus:ring-1 focus:ring-black placeholder-neutral-400" id="catNameInput" placeholder="e.g. Health &amp; Wellness, Travel, Hobbies" type="text" value=""/>
+<!-- Preset Quick Tags -->
+<div class="flex flex-wrap gap-1.5 pt-1">
+<button class="px-2 py-0.5 rounded-full bg-stone-100 hover:bg-stone-200 text-[11px] font-sans text-ink border border-black/10 cursor-pointer" onclick="setPresetCatName('Travel &amp; Getaway')" type="button">+ Travel</button>
+<button class="px-2 py-0.5 rounded-full bg-stone-100 hover:bg-stone-200 text-[11px] font-sans text-ink border border-black/10 cursor-pointer" onclick="setPresetCatName('Health &amp; Care')" type="button">+ Health</button>
+<button class="px-2 py-0.5 rounded-full bg-stone-100 hover:bg-stone-200 text-[11px] font-sans text-ink border border-black/10 cursor-pointer" onclick="setPresetCatName('Entertainment')" type="button">+ Entertainment</button>
+<button class="px-2 py-0.5 rounded-full bg-stone-100 hover:bg-stone-200 text-[11px] font-sans text-ink border border-black/10 cursor-pointer" onclick="setPresetCatName('Pet Supplies')" type="button">+ Pet Care</button>
+</div>
+</div>
+<!-- Modal Footer Actions -->
+<div class="pt-2 border-t border-black/15 flex items-center justify-between gap-2">
+<button class="px-4 py-2 rounded-xl bg-stone-100 text-ink text-xs font-sans font-medium hover:bg-stone-200 active:scale-95 transition-transform cursor-pointer" onclick="closeCategoryModal()" type="button">Cancel</button>
+<button class="flex-1 py-2 rounded-xl bg-ink text-white font-montez text-xl hover:bg-neutral-800 active:scale-95 transition-transform cursor-pointer flex items-center justify-center gap-1.5" onclick="confirmRenameCategory()" type="button">
+<span class="material-symbols-outlined text-[18px]">check</span>
+<span class="">Update Name</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Toast Feedback Message -->
+<div class="fixed bottom-12 left-1/2 -translate-x-1/2 z-50 bg-ink text-white px-4 py-2 rounded-full font-montez text-lg shadow-lg transition-opacity duration-300 pointer-events-none opacity-0" id="toastFeedback">Showing Nov 2024</div>
+<!-- Home Indicator Line for iOS frame -->
+<footer class="w-full pb-2 pt-1 flex justify-center z-20 bg-white/90 backdrop-blur-sm pointer-events-none">
+<div class="w-32 h-1 bg-ink/70 rounded-full"></div>
+</footer></main>
+<!-- BEGIN: Logic & Interaction Scripts -->
+<script data-purpose="budget-dial-and-category-manager">
+  // Central Application State - initialized ALL to $0.00
+  const state = {
+    activeTarget: 'cat_essentials', // 'total' or category id
+    total: 0,
+    categories: [
+      { id: 'cat_essentials', name: 'Essentials', subtitle: 'Rent, Groceries, Bills', icon: 'local_grocery_store', amount: 0 },
+      { id: 'cat_dining', name: 'Food & Dining', subtitle: 'Dining, Cafes, Outings', icon: 'restaurant', amount: 0 },
+      { id: 'cat_savings', name: 'Savings & Growth', subtitle: 'SIP, Emergency Fund', icon: 'savings', amount: 0 }
+    ],
+    currentAngle: 0,
+    editingCategoryId: null,
+    // Month picker state
+    selectedMonth: 'Nov',
+    selectedYear: 2024,
+    pickerYear: 2024,
+    isMonthPickerOpen: false
+  };
+
+  const MONTHS_LIST = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+  // DOM Elements
+  const totalBudgetCard = document.getElementById('totalBudgetCard');
+  const plannedTargetBadge = document.getElementById('plannedTargetBadge');
+  const heroTotalDisplay = document.getElementById('heroTotalDisplay');
+  const activeDialSubtitle = document.getElementById('activeDialSubtitle');
+  const activeDialCatName = document.getElementById('activeDialCatName');
+  const directAmountInput = document.getElementById('directAmountInput');
+  const rotaryDialWheel = document.getElementById('rotaryDialWheel');
+  const dialIndicatorKnob = document.getElementById('dialIndicatorKnob');
+  const categoryTrack = document.getElementById('categoryTrack');
+  const bucketCountBadge = document.getElementById('bucketCountBadge');
+  const toastFeedback = document.getElementById('toastFeedback');
+  const newCategoryModal = document.getElementById('newCategoryModal');
+  const catNameInput = document.getElementById('catNameInput');
+
+  // Month Picker Dropdown DOM Elements
+  const monthChipBtn = document.getElementById('monthChipBtn');
+  const selectedMonthLabel = document.getElementById('selectedMonthLabel');
+  const monthDropdownArrow = document.getElementById('monthDropdownArrow');
+  const monthPickerDropdown = document.getElementById('monthPickerDropdown');
+  const dropdownYearDisplay = document.getElementById('dropdownYearDisplay');
+  const monthGrid = document.getElementById('monthGrid');
+  const monthDropdownContainer = document.getElementById('monthDropdownContainer');
+
+  function formatCurrency(val) {
+    return '$' + Number(val || 0).toLocaleString('en-US', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+  }
+
+  function getActiveCategory() {
+    return state.categories.find(c => c.id === state.activeTarget);
+  }
+
+  function getActiveAmount() {
+    if (state.activeTarget === 'total') {
+      return state.total;
+    }
+    const cat = getActiveCategory();
+    return cat ? cat.amount : 0;
+  }
+
+  function setActiveAmount(newAmt, updateDialAngle = true) {
+    const clamped = Math.max(0, Math.min(99999, Math.round(newAmt)));
+    if (state.activeTarget === 'total') {
+      state.total = clamped;
+    } else {
+      const cat = getActiveCategory();
+      if (cat) {
+        cat.amount = clamped;
+      }
+    }
+    if (updateDialAngle) {
+      // Map $0 - $2000 to full 360 deg cycle
+      state.currentAngle = Math.round((clamped % 2000) / 2000 * 360);
+    }
+    updateUI();
+  }
+
+  function selectTotalTarget() {
+    state.activeTarget = 'total';
+    // Update dial angle to match total
+    state.currentAngle = Math.round((state.total % 2000) / 2000 * 360);
+    updateUI();
+  }
+
+  function selectCategoryTarget(catId) {
+    state.activeTarget = catId;
+    const cat = getActiveCategory();
+    if (cat) {
+      state.currentAngle = Math.round((cat.amount % 2000) / 2000 * 360);
+    }
+    updateUI();
+    const activeEl = document.querySelector(`[data-cat-id="${catId}"]`);
+    if (activeEl) {
+      activeEl.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+    }
+  }
+
+  function renderCategoryCards() {
+    categoryTrack.innerHTML = '';
+    state.categories.forEach(cat => {
+      const isActive = state.activeTarget === cat.id;
+      const card = document.createElement('article');
+      card.className = `cat-item-card min-w-[78%] snap-center shrink-0 bg-white rounded-2xl p-3.5 border shadow-xs flex flex-col justify-between gap-2.5 cursor-pointer transition-all ${
+        isActive 
+          ? 'border-2 border-ink shadow-md bg-stone-50/50 scale-[1.01]' 
+          : 'border-black/15 opacity-90 hover:opacity-100 hover:border-black/40'
+      }`;
+      card.setAttribute('data-cat-id', cat.id);
+      card.onclick = (e) => {
+        // Prevent trigger if clicking inline edit icon or contenteditable
+        if (e.target.closest('.rename-action') || e.target.closest('[contenteditable]')) return;
+        selectCategoryTarget(cat.id);
+      };
+
+      card.innerHTML = `
+        <div class="flex items-start justify-between">
+          <div class="flex items-center gap-2">
+            <div class="w-9 h-9 rounded-xl bg-stone-100 flex items-center justify-center text-ink shrink-0">
+              <span class="material-symbols-outlined text-[18px]">${cat.icon || 'folder_open'}</span>
+            </div>
+            <div>
+              <div class="flex items-center gap-1.5">
+                <h3 class="font-montez text-2xl text-ink leading-tight cursor-text category-name-text" title="Tap to rename" contenteditable="true" spellcheck="false">${cat.name}</h3>
+                <button type="button" class="rename-action text-neutral-400 hover:text-ink active:scale-90 transition-transform p-0.5" title="Rename Category" onclick="openRenameModal('${cat.id}')">
+                  <span class="material-symbols-outlined text-[14px]">edit</span>
+                </button>
+              </div>
+              <span class="text-[10px] font-sans text-neutral-500 uppercase tracking-wide block leading-tight">${cat.subtitle || 'Custom Budget'}</span>
+            </div>
+          </div>
+          <span class="text-[11px] font-mono px-2 py-0.5 rounded-full font-semibold transition-colors ${
+            isActive ? 'bg-ink text-white' : 'bg-stone-100 text-neutral-600'
+          }">
+            ${isActive ? 'Active Tuner' : 'Tap to Tune'}
+          </span>
+        </div>
+        <div class="flex items-baseline justify-between bg-stone-50 rounded-xl p-2 border border-black/5">
+          <span class="text-xs font-sans text-neutral-500">Allocated</span>
+          <span class="font-montez text-2xl text-ink font-bold">${formatCurrency(cat.amount)}</span>
+        </div>
+      `;
+
+      // Inline editable category name handling
+      const nameEl = card.querySelector('.category-name-text');
+      if (nameEl) {
+        nameEl.addEventListener('blur', () => {
+          const newName = nameEl.innerText.trim();
+          if (newName) {
+            cat.name = newName;
+            if (state.activeTarget === cat.id) {
+              activeDialCatName.textContent = newName;
+            }
+          } else {
+            nameEl.innerText = cat.name;
+          }
+        });
+        nameEl.addEventListener('keydown', (ev) => {
+          if (ev.key === 'Enter') {
+            ev.preventDefault();
+            nameEl.blur();
+          }
+        });
+      }
+
+      categoryTrack.appendChild(card);
+    });
+
+    bucketCountBadge.textContent = `${state.categories.length} bucket${state.categories.length === 1 ? '' : 's'}`;
+  }
+
+  function updateUI() {
+    // 1. Total display
+    heroTotalDisplay.textContent = formatCurrency(state.total);
+
+    // 2. Active target header & cards style
+    const currentAmt = getActiveAmount();
+    if (document.activeElement !== directAmountInput) {
+      directAmountInput.value = Number(currentAmt).toFixed(2);
+    }
+
+    if (state.activeTarget === 'total') {
+      totalBudgetCard.classList.add('doodle-box-active');
+      plannedTargetBadge.classList.replace('text-neutral-500', 'text-ink');
+
+      activeDialSubtitle.textContent = 'Dial Tuning Target';
+      activeDialCatName.textContent = 'Total Budget Pool';
+    } else {
+      totalBudgetCard.classList.remove('doodle-box-active');
+      plannedTargetBadge.classList.replace('text-ink', 'text-neutral-500');
+
+      const cat = getActiveCategory();
+      activeDialSubtitle.textContent = 'Dial Tuning Active';
+      activeDialCatName.textContent = cat ? cat.name : 'Category';
+    }
+
+    // 3. Re-render categories track to preserve active highlights and values
+    renderCategoryCards();
+
+    // 4. Update dial indicator knob position along concentric track (r = 78px)
+    dialIndicatorKnob.style.transform = `rotate(${state.currentAngle}deg) translateY(-78px)`;
+  }
+
+  // Direct Input Handlers
+  function focusDirectInput() {
+    directAmountInput.focus();
+  }
+
+  function handleDirectInputFocus(input) {
+    input.select();
+  }
+
+  function handleDirectAmountChange(val) {
+    const num = parseFloat(val);
+    const validNum = isNaN(num) ? 0 : Math.max(0, Math.min(99999, num));
+    if (state.activeTarget === 'total') {
+      state.total = validNum;
+    } else {
+      const cat = getActiveCategory();
+      if (cat) cat.amount = validNum;
+    }
+    // Update dial angle
+    state.currentAngle = Math.round((validNum % 2000) / 2000 * 360);
+    heroTotalDisplay.textContent = formatCurrency(state.total);
+    dialIndicatorKnob.style.transform = `rotate(${state.currentAngle}deg) translateY(-78px)`;
+    renderCategoryCards();
+  }
+
+  function handleDirectInputBlur(input) {
+    const amt = getActiveAmount();
+    input.value = Number(amt).toFixed(2);
+    updateUI();
+  }
+
+  // Quick step adjustment pills (-$100, -$50, +$50, +$100)
+  function stepActiveValue(delta) {
+    const current = getActiveAmount();
+    setActiveAmount(current + delta, false);
+    // Smoothly step dial knob angle on step button tap
+    state.currentAngle = (state.currentAngle + (delta > 0 ? 18 : -18) + 360) % 360;
+    dialIndicatorKnob.style.transform = `rotate(${state.currentAngle}deg) translateY(-78px)`;
+  }
+
+  // Rotary Dial Drag & Concentric Rotation Physics
+  let isDialDragging = false;
+  let lastDialAngle = 0;
+  let accumulatedAngleDelta = 0;
+
+  function calculateTouchAngle(e) {
+    const rect = rotaryDialWheel.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const clientX = e.touches && e.touches[0] ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches && e.touches[0] ? e.touches[0].clientY : e.clientY;
+    const rad = Math.atan2(clientY - cy, clientX - cx);
+    let deg = rad * (180 / Math.PI);
+    return (deg + 90 + 360) % 360; // 0 deg at 12 o'clock top
+  }
+
+  function onDialPointerDown(e) {
+    // If center add button is tapped, don't drag dial
+    if (e.target.closest('#dialCenterPlus')) return;
+    isDialDragging = true;
+    lastDialAngle = calculateTouchAngle(e);
+    accumulatedAngleDelta = 0;
+    window.addEventListener('pointermove', onDialPointerMove);
+    window.addEventListener('pointerup', onDialPointerUp);
+    window.addEventListener('pointercancel', onDialPointerUp);
+  }
+
+  function onDialPointerMove(e) {
+    if (!isDialDragging) return;
+    const currentAngle = calculateTouchAngle(e);
+    let diff = currentAngle - lastDialAngle;
+
+    // Handle wrap-around across 0/360 boundary smoothly
+    if (diff > 180) diff -= 360;
+    if (diff < -180) diff += 360;
+
+    lastDialAngle = currentAngle;
+    state.currentAngle = (state.currentAngle + diff + 360) % 360;
+    dialIndicatorKnob.style.transform = `rotate(${state.currentAngle}deg) translateY(-78px)`;
+
+    accumulatedAngleDelta += diff;
+    // Every 8 degrees of rotation increments/decrements by $25 step
+    const stepAngle = 8;
+    if (Math.abs(accumulatedAngleDelta) >= stepAngle) {
+      const steps = Math.trunc(accumulatedAngleDelta / stepAngle);
+      accumulatedAngleDelta %= stepAngle;
+      const currentVal = getActiveAmount();
+      setActiveAmount(currentVal + (steps * 25), false);
+    }
+  }
+
+  function onDialPointerUp() {
+    isDialDragging = false;
+    window.removeEventListener('pointermove', onDialPointerMove);
+    window.removeEventListener('pointerup', onDialPointerUp);
+    window.removeEventListener('pointercancel', onDialPointerUp);
+  }
+
+  rotaryDialWheel.addEventListener('pointerdown', onDialPointerDown);
+
+  // Month Picker Dropdown Logic
+  function renderMonthPickerGrid() {
+    dropdownYearDisplay.textContent = state.pickerYear;
+    monthGrid.innerHTML = '';
+
+    MONTHS_LIST.forEach(month => {
+      const isSelected = (state.selectedMonth === month && state.selectedYear === state.pickerYear);
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = `py-1.5 px-2 rounded-xl text-center font-montez text-lg transition-all cursor-pointer border ${
+        isSelected
+          ? 'bg-ink text-white border-black font-bold shadow-xs'
+          : 'bg-stone-50 hover:bg-stone-100 text-ink border-black/10 active:scale-95'
+      }`;
+      btn.textContent = month;
+      btn.onclick = (e) => {
+        e.stopPropagation();
+        selectMonthYear(month, state.pickerYear);
+      };
+      monthGrid.appendChild(btn);
+    });
+  }
+
+  function toggleMonthPicker(e) {
+    if (e) e.stopPropagation();
+    state.isMonthPickerOpen = !state.isMonthPickerOpen;
+    if (state.isMonthPickerOpen) {
+      state.pickerYear = state.selectedYear;
+      renderMonthPickerGrid();
+      monthPickerDropdown.classList.remove('opacity-0', 'pointer-events-none', '-translate-y-2');
+      monthDropdownArrow.style.transform = 'rotate(180deg)';
+      monthChipBtn.classList.add('border-black/30', 'bg-stone-200');
+    } else {
+      closeMonthPicker();
+    }
+  }
+
+  function closeMonthPicker() {
+    state.isMonthPickerOpen = false;
+    monthPickerDropdown.classList.add('opacity-0', 'pointer-events-none', '-translate-y-2');
+    monthDropdownArrow.style.transform = 'rotate(0deg)';
+    monthChipBtn.classList.remove('border-black/30', 'bg-stone-200');
+  }
+
+  function adjustDropdownYear(delta) {
+    state.pickerYear += delta;
+    renderMonthPickerGrid();
+  }
+
+  function selectMonthYear(month, year) {
+    state.selectedMonth = month;
+    state.selectedYear = year;
+    selectedMonthLabel.textContent = `${month} ${year}`;
+    closeMonthPicker();
+    showToast(`Switched to ${month} ${year}`);
+  }
+
+  function selectCurrentMonthPreset() {
+    selectMonthYear('Nov', 2024);
+  }
+
+  // Global listener to close month dropdown on outside click
+  document.addEventListener('click', (e) => {
+    if (state.isMonthPickerOpen && !monthDropdownContainer.contains(e.target)) {
+      closeMonthPicker();
+    }
+  });
+
+  // Direct Category Addition via '+' center button or '+ Add Category' button
+  let newCatCounter = 1;
+  function handleAddNewCategoryDirectly(e) {
+    if (e) e.stopPropagation();
+
+    const icons = ['local_activity', 'shopping_bag', 'flight', 'pets', 'fitness_center', 'cottage', 'celebration'];
+    const randomIcon = icons[state.categories.length % icons.length];
+    const newId = 'cat_' + Date.now();
+    const newName = `New Category ${newCatCounter++}`;
+
+    const newCat = {
+      id: newId,
+      name: newName,
+      subtitle: 'Custom portion',
+      icon: randomIcon,
+      amount: 0.00
+    };
+
+    state.categories.push(newCat);
+    state.activeTarget = newId;
+    state.currentAngle = 0;
+    updateUI();
+
+    // Smoothly scroll to the newly created card
+    setTimeout(() => {
+      const cardEl = document.querySelector(`[data-cat-id="${newId}"]`);
+      if (cardEl) {
+        cardEl.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        const nameH3 = cardEl.querySelector('.category-name-text');
+        if (nameH3) {
+          nameH3.focus();
+        }
+      }
+    }, 100);
+
+    showToast(`✓ Added "${newName}"`);
+  }
+
+  // Modal Category Rename Handlers
+  function openRenameModal(catId) {
+    state.editingCategoryId = catId;
+    const cat = state.categories.find(c => c.id === catId);
+    if (!cat) return;
+    catNameInput.value = cat.name;
+    newCategoryModal.classList.remove('opacity-0', 'pointer-events-none');
+    setTimeout(() => catNameInput.focus(), 100);
+  }
+
+  function closeCategoryModal() {
+    newCategoryModal.classList.add('opacity-0', 'pointer-events-none');
+    state.editingCategoryId = null;
+  }
+
+  function handleModalOverlayClick(e) {
+    if (e.target === newCategoryModal) {
+      closeCategoryModal();
+    }
+  }
+
+  function setPresetCatName(name) {
+    catNameInput.value = name;
+  }
+
+  function confirmRenameCategory() {
+    const val = catNameInput.value.trim();
+    if (val && state.editingCategoryId) {
+      const cat = state.categories.find(c => c.id === state.editingCategoryId);
+      if (cat) {
+        cat.name = val;
+        updateUI();
+        showToast(`Updated to "${val}"`);
+      }
+    }
+    closeCategoryModal();
+  }
+
+  // Generic Helpers: Toast, Save, Reset
+  function showToast(msg) {
+    toastFeedback.textContent = msg;
+    toastFeedback.classList.remove('opacity-0');
+    setTimeout(() => {
+      toastFeedback.classList.add('opacity-0');
+    }, 2200);
+  }
+
+  function saveBudgetPlan() {
+    showToast(`✓ Budget Saved for ${state.selectedMonth} ${state.selectedYear}!`);
+  }
+
+  function resetBudgetDefaults() {
+    state.total = 0;
+    state.categories.forEach(c => c.amount = 0);
+    state.activeTarget = 'cat_essentials';
+    state.currentAngle = 0;
+    updateUI();
+    showToast('Values reset to $0.00');
+  }
+
+  function shareBudgetSummary() {
+    showToast(`Exporting ${state.selectedMonth} ${state.selectedYear} Summary...`);
+  }
+
+  // Initial Boot with ALL values at $0.00
+  renderMonthPickerGrid();
+  updateUI();
+</script>
+<!-- END: Logic & Interaction Scripts -->
+</body></html>
